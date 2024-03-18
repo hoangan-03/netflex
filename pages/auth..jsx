@@ -5,7 +5,6 @@ import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
-
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 const Auth = () => {
@@ -64,10 +63,10 @@ const Auth = () => {
         email,
         password,
         redirect: false,
-        callbackUrl: "/",
+        callbackUrl: "/profiles",
       });
 
-      router.push("/");
+      router.push("/profiles");
     } catch (error) {
       console.log(error);
     }
@@ -168,11 +167,11 @@ const Auth = () => {
           {variant === "login" ? "Login" : "Register"}
         </button>
         <div className="flex flex-row items-center gap-5 mt-8 justify-center ">
-          <div onClick={() => signIn("google", { callbackUrl: "/" })} className="w-10 cursor-pointer hover:opacity-70 h-10 bg-white rounded-full flex items-center justify-center">
+          <div onClick={() => signIn("google", { callbackUrl: "/profiles" })} className="w-10 cursor-pointer hover:opacity-70 h-10 bg-white rounded-full flex items-center justify-center">
             <FcGoogle size={30}></FcGoogle>
           </div>
           <div
-            onClick={() => signIn("github", { callbackUrl: "/" })}
+            onClick={() => signIn("github", { callbackUrl: "/profiles" })}
             className="w-10 cursor-pointer hover:opacity-70 h-10 bg-white rounded-full flex items-center justify-center"
           >
             <FaGithub size={30} color="black"></FaGithub>

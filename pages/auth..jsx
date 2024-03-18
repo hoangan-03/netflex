@@ -1,10 +1,15 @@
 import React, { useCallback } from "react";
-import back from "./../assets/picture/back.jpg"
-import Image from 'next/image';
+import back from "./../assets/picture/back.jpg";
+import Image from "next/image";
 import axios from "axios";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { useRouter } from "next/router";
+
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 const Auth = () => {
+  const router = useRouter();
   const [variant, setVariant] = useState("login");
 
   const [isFocused2, setIsFocused2] = useState(false);
@@ -52,6 +57,21 @@ const Auth = () => {
   function handleChangee(e) {
     setChecked(e.target.checked);
   }
+
+  const login = useCallback(async () => {
+    try {
+      await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+        callbackUrl: "/",
+      });
+
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }, [email, password, router]);
   const register = useCallback(async () => {
     try {
       await axios.post("api/register", {
@@ -59,24 +79,12 @@ const Auth = () => {
         name,
         password,
       });
+      login();
     } catch (error) {
       console.log(error);
     }
-  }, [email, name, password]);
+  }, [email, name, password, login]);
 
-  const login = useCallback(async()=> {
-    try{
-      await signIn('credentials',{
-        email,
-        password,
-        redirect: false,
-        callbackUrl: '/'
-      });
-    }catch (error){
-      console.log(error);
-
-    }
-  },[email,password])
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center netflix">
       <div className="bg-black w-[440px] h-[660px] z-10 p-[60px] flex flex-col gap-3 ">
@@ -113,8 +121,8 @@ const Auth = () => {
         <div className="relative w-full h-[50px]">
           <label
             htmlFor="username"
-            className={`absolute  h-auto top-${
-              isFocused || email !== "" ? "[-1px]" : "3"
+            className={`absolute mt-2  h-auto top-${
+              isFocused || email !== "" ? "[-1px]" : ""
             } ${
               isFocused ? "text-sm " : "text-lg"
             } left-[10px] text-gray-400 px-2 transition-all duration-100`}
@@ -134,8 +142,8 @@ const Auth = () => {
         <div className="relative w-full h-[50px] mb-10">
           <label
             htmlFor="password"
-            className={`absolute  h-auto top-${
-              isFocused2 || password !== "" ? "[-1px]" : "3"
+            className={`absolute mt-2 h-auto top-${
+              isFocused2 || password !== "" ? "[-1px]" : ""
             } ${
               isFocused2 ? "text-sm " : "text-lg"
             } left-[10px] text-gray-400 px-2 transition-all duration-100`}
@@ -153,12 +161,23 @@ const Auth = () => {
           />
         </div>
         <button
-          onClick={variant === "login" ? login : register  }
+          onClick={variant === "login" ? login : register}
           to="/Home"
           className="bg-red-700 text-white text-center  text-xl w-full h-[50px] rounded-md flex justify-center items-center hover:text-red-500 hover:bg-white"
         >
           {variant === "login" ? "Login" : "Register"}
         </button>
+        <div className="flex flex-row items-center gap-5 mt-8 justify-center ">
+          <div onClick={() => signIn("google", { callbackUrl: "/" })} className="w-10 cursor-pointer hover:opacity-70 h-10 bg-white rounded-full flex items-center justify-center">
+            <FcGoogle size={30}></FcGoogle>
+          </div>
+          <div
+            onClick={() => signIn("github", { callbackUrl: "/" })}
+            className="w-10 cursor-pointer hover:opacity-70 h-10 bg-white rounded-full flex items-center justify-center"
+          >
+            <FaGithub size={30} color="black"></FaGithub>
+          </div>
+        </div>
         <div className="w-full h-[50px] flex flex-row justify-between">
           <div className="w-auto h-auto flex flex-row items-center gap-2">
             <input value="test" type="checkbox" onChange={handleChangee} />

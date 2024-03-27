@@ -3,7 +3,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  previewFeatures = ["mongoDb"]
 }
 
 datasource db {
@@ -69,4 +68,7 @@ model Movie {
   thumbnailUrl String
   genre String
   duration String
+  year String
+  rating String
+  cast String
 }

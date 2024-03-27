@@ -6,7 +6,6 @@ import useMovie from '@/hooks/useMovie';
 const Watch = () => {
   const router = useRouter();
   const { movieId } = router.query;
-
   const { data } = useMovie(movieId as string);
   
   return (
@@ -17,7 +16,7 @@ const Watch = () => {
           <span className="font-light">Watching:</span> {data?.title}
         </p>
       </nav>
-      <video className="h-full w-full" autoPlay controls src={data?.videoUrl}></video>
+      <iframe className="h-full w-full" allowFullScreen src={data?.videoUrl}></iframe>
     </div>
   )
 }

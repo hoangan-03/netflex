@@ -105,11 +105,22 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
             </div>
           </div>
           <p className="text-green-400 font-semibold mt-4">
-            New <span className="text-white">{data?.release_date?.substring(0, 4)}</span>
+            New{" "}
+            <span className="text-white">
+              {data?.release_date?.substring(0, 4)}
+            </span>
           </p>
           <div className="flex flex-row items-center gap-2 mt-2 text-[12px] text-white lg:text-sm">
             <p>
-              {(data.genres[0] as { name: string })?.name} • {(data.genres[1] as { name: string })?.name} {data.genres[2] &&
+              {data.genres &&
+                data.genres.length > 0 &&
+                (data.genres[0] as { name: string })?.name}{" "}
+              • {" "}
+              {data.genres &&
+                data.genres.length > 1 &&
+                (data.genres[1] as { name: string })?.name}
+              {data.genres &&
+                data.genres.length > 2 &&
                 ` • ${(data.genres[2] as { name: string })?.name}`}
             </p>
           </div>

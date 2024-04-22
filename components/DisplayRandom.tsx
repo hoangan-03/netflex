@@ -1,37 +1,44 @@
-import React, { useCallback } from "react";
+import React, { useCallback,useState } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-
+import { MovieInterface } from "@/types";
 import PlayButton from "@/components/PlayButton";
 import useBillboard from "@/hooks/useRandom";
 import useInfoModalStore from "@/hooks/useInfoStore";
 
-const DisplayRandom: React.FC = () => {
+interface MovieListProps {
+  data: MovieInterface[];
+}
+
+const DisplayRandom: React.FC<MovieListProps> = ({ data }) => {
   const { openModal } = useInfoModalStore();
-  const { data } = useBillboard();
+
+  const [randomIndex] = useState(Math.floor(Math.random() * data.length));
 
   const handleOpenModal = useCallback(() => {
-    openModal(data?.id);
-  }, [openModal, data?.id]);
+    openModal(data[randomIndex]);
+  }, [openModal, data, randomIndex]);
 
+  const thumbnailUrl =
+    "https://image.tmdb.org/t/p/original" + data[randomIndex]?.backdrop_path;
   return (
     <div className="relative h-[56.25vw] w-full overflow-hidden">
       <video
-        poster={data?.thumbnailUrl}
+        poster={thumbnailUrl}
         className="w-full h-[56.25vw] object-cover brightness-[60%] transition duration-500"
         autoPlay
         muted
         loop
-        src={data?.videoUrl}
+        src={data[randomIndex]?.videoUrl}
       ></video>
       <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
         <p className="text-white text-1xl md:text-5xl h-full w-[50%] lg:text-6xl font-bold drop-shadow-xl">
-          {data?.title}
+          {data[randomIndex]?.original_title}
         </p>
         <p className="text-white text-[8px] md:text-lg mt-3 md:mt-8 w-[90%] md:w-[80%] lg:w-[50%] drop-shadow-xl">
-          {data?.description}
+          {data[randomIndex]?.overview}
         </p>
         <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
-          <PlayButton movieId={data?.id} />
+          <PlayButton movieId={data[randomIndex]?.id} />
           <button
             onClick={handleOpenModal}
             className="

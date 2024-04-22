@@ -3,8 +3,8 @@ import { useRouter } from "next/router";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { PlayIcon } from "@heroicons/react/24/solid";
 
-import { MovieInterface } from "@/types";
-import useInfoModalStore from "@/hooks/useInfoStore";
+import { MovieInterface } from "../types";
+import useInfoModalStore from "../hooks/useInfoStore";
 
 interface MovieCardProps {
   data: MovieInterface;
@@ -18,12 +18,14 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
     () => router.push(`/watch/${data.id}`),
     [router, data.id]
   );
+  const thumbnailUrl =
+    "https://image.tmdb.org/t/p/original" + data.backdrop_path;
 
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
         onClick={redirectToWatch}
-        src={data.thumbnailUrl}
+        src={thumbnailUrl}
         alt="Movie"
         draggable={false}
         className="
@@ -61,7 +63,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
       >
         <img
           onClick={redirectToWatch}
-          src={data.thumbnailUrl}
+          src={thumbnailUrl}
           alt="Movie"
           draggable={false}
           className="
@@ -96,20 +98,20 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
               <PlayIcon className="text-black w-4 lg:w-6" />
             </div>
             <div
-              onClick={() => openModal(data?.id)}
+              onClick={() => openModal(data)}
               className="cursor-pointer ml-auto group/item w-6 h-6 lg:w-10 lg:h-10 border-white border-2 rounded-full flex justify-center items-center transition hover:border-neutral-300"
             >
               <ChevronDownIcon className="text-white group-hover/item:text-neutral-300 w-4 lg:w-6" />
             </div>
           </div>
           <p className="text-green-400 font-semibold mt-4">
-            New <span className="text-white">2023</span>
+            New <span className="text-white">{data?.release_date?.substring(0, 4)}</span>
           </p>
-          <div className="flex flex-row mt-4 gap-2 items-center">
-            <p className="text-white text-[10px] lg:text-sm">{data.duration}</p>
-          </div>
-          <div className="flex flex-row items-center gap-2 mt-4 text-[8px] text-white lg:text-sm">
-            <p>{data.genre}</p>
+          <div className="flex flex-row items-center gap-2 mt-2 text-[12px] text-white lg:text-sm">
+            <p>
+              {(data.genres[0] as { name: string })?.name} • {(data.genres[1] as { name: string })?.name} {data.genres[2] &&
+                ` • ${(data.genres[2] as { name: string })?.name}`}
+            </p>
           </div>
         </div>
       </div>

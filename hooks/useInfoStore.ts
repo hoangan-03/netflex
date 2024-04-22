@@ -1,17 +1,18 @@
 import { create } from 'zustand';
+import { MovieInterface } from "@/types"; // Import the MovieInterface type
 
 export interface ModalStoreInterface {
-  movieId?: string;
+  signleInfo?: MovieInterface;
   isOpen: boolean;
-  openModal: (movieId: string) => void;
+  openModal: (signleInfo: MovieInterface) => void;
   closeModal: () => void;
 }
 
 const useInfoModalStore = create<ModalStoreInterface>((set) => ({
-  movieId: undefined,
+  signleInfo: undefined,
   isOpen: false,
-  openModal: (movieId: string) => set({ isOpen: true, movieId }),
-  closeModal: () => set({ isOpen: false, movieId: undefined }),
+  openModal: (signleInfo: MovieInterface) => set({ isOpen: true, signleInfo }),
+  closeModal: () => set({ isOpen: false, signleInfo: undefined }),
 }));
 
 export default useInfoModalStore;

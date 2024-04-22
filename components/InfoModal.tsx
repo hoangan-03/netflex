@@ -4,21 +4,31 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import PlayButton from "@/components/PlayButton";
 import useInfoModalStore from "@/hooks/useInfoStore";
 import useMovie from "@/hooks/useMovie";
-
+import useMovieList from "@/hooks/useMovieList";
+import { fetchCast } from "@/api/film";
 interface InfoModalProps {
   visible?: boolean;
   onClose: any;
 }
 
 const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
+  const [castData, setCast] = useState<any>(null); // state variable to store the cast
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
 
-  const { movieId } = useInfoModalStore();
-  const { data = {} } = useMovie(movieId);
+  const { signleInfo } = useInfoModalStore();
+
+  console.log("this is ID", signleInfo)
 
   useEffect(() => {
     setIsVisible(!!visible);
   }, [visible]);
+  useEffect(() => {
+    if (signleInfo?.id) {
+      fetchCast(signleInfo?.id)
+        .then(data => setCast(data))
+        .catch(error => console.error(error));
+    }
+  }, [signleInfo]);
 
   const handleClose = useCallback(() => {
     setIsVisible(false);
@@ -30,6 +40,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
     return null;
   }
 
+  const thumbnailUrl = "https://image.tmdb.org/t/p/original" + signleInfo?.backdrop_path;
   return (
     <div className="z-50 transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
       <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-hidden">
@@ -40,11 +51,11 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
         >
           <div className="relative h-96">
             <video
-              poster={data?.thumbnailUrl}
+              poster={thumbnailUrl}
               autoPlay
               muted
               loop
-              src={data?.videoUrl}
+              src={signleInfo?.videoUrl}
               className="w-full brightness-[60%] object-cover h-full"
             />
 
@@ -56,10 +67,10 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
             </div>
             <div className="absolute bottom-[10%] left-10">
               <p className="text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8">
-                {data?.title}
+                {signleInfo?.original_title}
               </p>
               <div className="flex flex-row gap-4 items-center">
-                <PlayButton movieId={data?.id} />
+                <PlayButton movieId={signleInfo?.id} />
               </div>
             </div>
           </div>
@@ -71,21 +82,21 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
                   <p className="text-green-400 font-semibold text-lg">
                     67% Match
                   </p>
-                  <p className="text-gray-300 text-lg">{data?.year}</p>
-                  <p className="text-gray-300 text-lg">{data?.duration}</p>
+                  <p className="text-gray-300 text-lg">{signleInfo?.release_date?.substring(0, 4)}</p>
+                  <p className="text-gray-300 text-lg">{signleInfo?.runtime} {"minutes"}</p>
                 </div>
-                <p className="text-white text-lg w-auto mb-7">{data?.rating}</p>
+                <p className="text-white text-lg w-auto mb-7">{signleInfo?.vote_average} {"/10"}</p>
 
-                <p className="text-white text-base">{data?.description}</p>
+                <p className="text-white text-base">{signleInfo?.overview}</p>
               </div>
               <div className="w-[30%] h-full flex flex-col gap-3 justify-start items-start">
                 <div className="text-white  text-base">
                   <span className="text-gray-200 font-bold">Cast: </span>
-                  {data?.cast}
+                  {castData?.cast[0].name}, {castData?.cast[1].name}, {castData?.cast[2].name}
                 </div>
                 <div className="text-white  text-base">
                   <span className="text-gray-200 font-bold">Genre: </span>
-                  {data?.genre}
+                  {(signleInfo?.genres && signleInfo?.genres.length > 0 && (signleInfo?.genres[0] as { name: string })?.name)}{", "}{(signleInfo?.genres && signleInfo?.genres.length > 0 && (signleInfo?.genres[1] as { name: string })?.name)}
                 </div>
               </div>
             </div>

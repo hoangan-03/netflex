@@ -15,7 +15,10 @@ const Suggestion: React.FC<MovieListProps> = ({ data, title }) => {
 
   const scroll = (scrollOffset: number) => {
     if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollLeft += scrollOffset;
+      scrollContainerRef.current.scrollTo({
+        left: scrollContainerRef.current.scrollLeft + scrollOffset,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -27,7 +30,7 @@ const Suggestion: React.FC<MovieListProps> = ({ data, title }) => {
         </p>
         <button
           className="absolute top-[160px] z-[1000] text-2xl bg-black/20 h-full w-[30px] left-0 flex items-start justify-center"
-          onClick={() => scroll(-600)}
+          onClick={() => scroll(-900)}
         >
           <Image
             className="w-6 h-6 object-cover invert"
@@ -39,7 +42,7 @@ const Suggestion: React.FC<MovieListProps> = ({ data, title }) => {
         </button>
         <div
           ref={scrollContainerRef}
-          className="flex flex-row h-full gap-6 w-[auto] overflow-x-hidden  hover:overflow-visible "
+          className="flex flex-row h-full gap-6 w-[auto] overflow-auto "
         >
           {data.map((movie) => (
             <MovieCard key={movie.id} data={movie} />
@@ -47,7 +50,7 @@ const Suggestion: React.FC<MovieListProps> = ({ data, title }) => {
         </div>
         <button
           className="absolute top-[160px] z-[1000] text-2xl bg-black/20 h-full w-[30px] right-0  flex items-start justify-center"
-          onClick={() => scroll(600)}
+          onClick={() => scroll(900)}
         >
           <Image
             className="w-6 h-6 object-cover invert"

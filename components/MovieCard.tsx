@@ -23,7 +23,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
 
   return (
     <div className="h-[16vw] w-[250px]">
-      <div className="flex-col h-full bg-zinc-900 w-[250px] transition-all duration-300 gap-2 justify-start rounded-md items-start hover:scale-125 z-[500] flex">
+      <div className="flex-col h-full bg-zinc-900 w-[250px] transition-all duration-300 gap-2 justify-start rounded-md items-start hover:scale-125 hover:translate-y-12 z-[500] flex">
         <img
           onClick={redirectToWatch}
           src={thumbnailUrl}

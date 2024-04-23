@@ -1,4 +1,4 @@
-import React, { useCallback,useState } from "react";
+import React, { useCallback,useState,useEffect } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { MovieInterface } from "@/types";
 import PlayButton from "@/components/PlayButton";
@@ -12,7 +12,11 @@ interface MovieListProps {
 const DisplayRandom: React.FC<MovieListProps> = ({ data }) => {
   const { openModal } = useInfoModalStore();
 
-  const [randomIndex] = useState(Math.floor(Math.random() * data.length));
+  const [randomIndex, setRandomIndex] = useState(0);
+
+  useEffect(() => {
+    setRandomIndex(Math.floor(Math.random() * data.length));
+  }, [data]);
 
   const handleOpenModal = useCallback(() => {
     openModal(data[randomIndex]);

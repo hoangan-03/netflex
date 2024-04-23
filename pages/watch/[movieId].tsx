@@ -1,39 +1,35 @@
-import React from "react";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import useMovie from "@/hooks/useMovie";
-
-import Artplayer from "artplayer"; // make sure to import Artplayer
+const apikey: string = process.env.NEXT_PUBLIC_API_KEY ?? '';
 const Watch = () => {
   const router = useRouter();
   const { movieId } = router.query;
   const { data } = useMovie(movieId as string);
-  const playerContainerRef = useRef(null);
-
+  const [movieName, setMovieName] = useState('');
+  
   useEffect(() => {
-    if (playerContainerRef.current) {
-      const player = new Artplayer({
-        container: playerContainerRef.current,
-        url: data?.videoUrl,
-      });
-
-      return () => {
-        player.destroy();
-      };
-    }
-  }, []);
+    fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apikey}`)
+      .then(response => response.json())
+      .then(data => setMovieName(data.title));
+  }, [movieId]);
 
   return (
-    <div className="h-screen w-screen bg-black">
-      <nav className="fixed w-full p-4 z-10 flex flex-row items-center gap-8 bg-black bg-opacity-70">
+    <div className="h-screen w-screen bg-black z-20">
+      <nav className="fixed w-full p-4 z-10 flex flex-row items-center gap-8 bg-black/20">
         <ArrowLeftIcon
           onClick={() => router.push("/")}
           className="w-[20px] md:w-10 text-white cursor-pointer hover:opacity-80 transition"
         />
+        <h2 className="text-2xl text-white font-bold">Watching: {movieName}</h2>
       </nav>
 
-      <div className="h-full w-full pl-[60px]" ref={playerContainerRef} />
+      <iframe
+        className="h-full w-full z-0"
+        src={data?.videoUrl}
+        allowFullScreen
+      />
     </div>
   );
 };

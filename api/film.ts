@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
+const apikey: string = process.env.NEXT_PUBLIC_API_KEY ?? '';
 
-const apikey: string = "4a480117a329e58187b35a525e698c0c";
 const movieEndpoint = (filmID: string): string =>
     `https://api.themoviedb.org/3/movie/${filmID}?api_key=${apikey}`;
 

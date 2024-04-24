@@ -11,9 +11,11 @@ import NavbarItem from "@/components/NavbarItem";
 import logo from "@/assets/picture/logo.png";
 import profileblue from "@/assets/icon/profile.jpg";
 import Image from "next/image";
+import { useRouter } from "next/router";
 const TOP_OFFSET = 66;
 
 const Navbar = () => {
+  const router = useRouter();
   const [showAccountMenu, setShowAccountMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showBackground, setShowBackground] = useState(false);
@@ -56,15 +58,20 @@ const Navbar = () => {
         />
         <div className="flex-row ml-8 gap-7 hidden lg:flex">
           <Link href="/">
-            <NavbarItem label="Home" active />
+            <NavbarItem label="Home" active={router.pathname === "/"} />
           </Link>
           <Link href="/films">
-            <NavbarItem label="Movies" />
+            <NavbarItem label="Movies" active={router.pathname === "/films"} />
           </Link>
           <Link href="/time">
-          <NavbarItem label="Time by Time" />
+            <NavbarItem
+              label="Time by Time"
+              active={router.pathname === "/time"}
+            />
           </Link>
-          <NavbarItem label="My List" />
+          <Link href="/mylist">
+          <NavbarItem label="My List" active={router.pathname === "/mylist"} />
+          </Link>
         </div>
         <div
           onClick={toggleMobileMenu}

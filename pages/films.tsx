@@ -136,8 +136,8 @@ const Home = () => {
         <MovieList title="Hollywood Movies" data={HollywoodMovies} />
         <MovieList title="Romantic Movies" data={romance} />
       </div>
-      <div className={`w-full h-auto py-[220px] px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block":"hidden"} `}>
-      <div className="grid grid-cols-4 gap-6 w-auto overflow-hidden px-10">
+      <div className={`w-full h-auto pt-[220px] px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block":"hidden"} `}>
+      <div className="grid grid-cols-4 gap-6 w-auto overflow-hidden px-10 pb-[220px]">
               {filterMovies?.map((movie: MovieInterface) => (
                 <MovieCard key={movie.id} data={movie} />
               ))}

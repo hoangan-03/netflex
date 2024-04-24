@@ -22,7 +22,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
     "https://image.tmdb.org/t/p/original" + data.backdrop_path;
 
   return (
-    <div className="h-[18vw] w-[250px]">
+    <div className="h-[20vw] w-[250px]">
       <div className="flex-col h-full pb-[30px] bg-zinc-900 w-[250px] transition-all duration-300 gap-2 justify-start rounded-md items-start hover:scale-125 hover:translate-y-12 z-[500] flex">
         <img
           onClick={redirectToWatch}
@@ -57,7 +57,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
             {Math.floor(data?.runtime / 60)}h {data?.runtime % 60}m
           </span>
         </p>
-        <div className="flex flex-row px-4 items-center gap-2 text-[12px] text-white lg:text-sm">
+        <div className="flex flex-row px-4 pb-6 items-center gap-2 text-[12px] text-white lg:text-sm">
           <p>
             {data.genres &&
               data.genres.length > 0 &&

@@ -128,8 +128,8 @@ const Home = () => {
       </div>
       <div className={`w-full h-auto flex flex-col gap-2 ${selectedGenre === "Genre" ? "block":"hidden"} `}>
         <DisplayRandom data={updatedMovies} />
-        <MovieList title="Suggestion for you" data={updatedMovies} />
-        <MovieList title="Anime" data={anime} />
+        <MovieList title="Suggestions for you" data={updatedMovies} />
+        <MovieList title="Anime Movies" data={anime} />
         <MovieList title="New Releases" data={newReleases} />
         <MovieList title="Science-Fiction Movies" data={scienceFiction} />
         <MovieList title="Horror Movies" data={horror} />

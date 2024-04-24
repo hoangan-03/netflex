@@ -25,7 +25,7 @@ const ScrollButton: React.FC<ScrollButtonProps> = ({
   icon,
 }) => (
   <button
-    className={`absolute top-0 z-[1000] text-2xl bg-black/20 h-[350px] w-[30px] ${direction}-0 flex items-center justify-center`}
+    className={`absolute top-0 z-[1000] text-2xl bg-black/20 h-[350px] w-[30px] ${direction}-0  flex items-center justify-center`}
     onClick={scroll}
   >
     <Image
@@ -56,10 +56,10 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
     <div className="px-4 md:px-12 mt-4 mb-8">
       <div className="w-full relative h-[420px] overflow-hidden">
         <div className="w-full h-auto flex flex-row gap-4 justify-start items-center mb-8 ">
-          <h1 className="text-white text-base md:text-2xl lg:text-3xl font-semibold w-auto h-auto">
+          <h1 className="pl-10 text-white text-base md:text-2xl lg:text-3xl font-semibold w-auto h-auto">
             {title}
           </h1>
-          <button className="text-grandblue flex flex-row gap-1 w-auto text-sm h-auto text-start justify-center items-end">
+          <button className="text-grandblue flex flex-row gap-1 w-auto text-sm h-auto text-start justify-center items-end ">
             <div onClick={() => openModal(data, title)}>Explore All</div>
             <Image
               className="w-3 h-3 mb-1 object-cover invert"
@@ -75,7 +75,7 @@ const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
         />
         <div
           ref={scrollContainerRef}
-          className="flex flex-row h-full gap-6 w-[auto] overflow-auto "
+          className="pl-10 flex flex-row h-full gap-6 w-[auto] overflow-auto "
         >
           {data.map((movie) => (
             <MovieCard key={movie.id} data={movie} />

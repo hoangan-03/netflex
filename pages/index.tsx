@@ -81,7 +81,7 @@ const Home = () => {
       
       <div className="w-full h-auto flex flex-col gap-2">
         <DisplayRandom data={updatedMovies} />
-        <MovieList title="Suggestion for you" data={updatedMovies} />
+        <MovieList title="Suggestions for you" data={updatedMovies} />
         <MovieList title="Anime" data={anime} />
         <MovieList title="New Releases" data={newReleases} />
         <MovieList title="Science-Fiction" data={scienceFiction} />

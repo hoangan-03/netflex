@@ -58,15 +58,13 @@ const Navbar = () => {
           <Link href="/">
             <NavbarItem label="Home" active />
           </Link>
-          <NavbarItem label="Series" />
           <Link href="/films">
-            <NavbarItem label="Films" />
+            <NavbarItem label="Movies" />
           </Link>
           <Link href="/time">
           <NavbarItem label="Time by Time" />
           </Link>
           <NavbarItem label="My List" />
-          <NavbarItem label="Browse by Languages" />
         </div>
         <div
           onClick={toggleMobileMenu}

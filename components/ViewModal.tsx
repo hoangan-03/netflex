@@ -28,7 +28,7 @@ const InfoModal: React.FC<ViewModalProps> = ({ visible, onClose }) => {
     return null;
   }
   return (
-    <div className="z-[60000] transition duration-300 w-auto h-auto bg-black bg-opacity-80 flex justify-center items-start pt-[50px] overflow-x-hidden overflow-y-auto fixed inset-0 ">
+    <div className="z-[60000] transition duration-300 w-auto h-auto bg-black bg-opacity-80 flex justify-center items-start pt-[50px] overflow-x-hidden overflow-y-auto fixed inset-0 rounded-xl">
       <div className="relative w-[1200px] h-auto rounded-md overflow-hidden">
         <div
           className={`${
@@ -45,7 +45,7 @@ const InfoModal: React.FC<ViewModalProps> = ({ visible, onClose }) => {
             <div className="h-[200px] flex justify-center items-center text-white text-4xl">
               {title}
             </div>
-            <div className="grid grid-cols-4 gap-4 w-auto overflow-auto px-10">
+            <div className="grid grid-cols-4 gap-4 w-auto h-auto px-10 pb-[100px] ">
               {data?.map((movie) => (
                 <MovieCard key={movie.id} data={movie} />
               ))}

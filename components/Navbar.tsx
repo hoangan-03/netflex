@@ -62,6 +62,11 @@ const Navbar = () => {
           <Link href="/films">
             <NavbarItem label="Films" />
           </Link>
+          <Link href="/time">
+          <NavbarItem label="Time by Time" />
+          </Link>
+          <NavbarItem label="My List" />
+          <NavbarItem label="Browse by Languages" />
         </div>
         <div
           onClick={toggleMobileMenu}

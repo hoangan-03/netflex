@@ -11,9 +11,13 @@ export interface MovieInterface {
   budget: number;
   revenue: number;
   runtime: number;
-  genres: Array<object>;
+  genres: Genre[];
+  original_language: string;
+  origin_country: Array<string>;
+  backdrop_path: string; 
 
-   // Fix the syntax error and use 'object' instead of 'Object'
-  backdrop_path: string; // Add this line
-  // Add any other properties that a movie object might have
+}
+export interface Genre {
+  id: number;
+  name: string;
 }

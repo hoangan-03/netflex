@@ -29,7 +29,7 @@ const Suggestion: React.FC<MovieListProps> = ({ data, title }) => {
           {title}
         </p>
         <button
-          className="absolute top-[160px] z-[1000] text-2xl bg-black/20 h-full w-[30px] left-0 flex items-start justify-center"
+          className="absolute top-0 z-[1000] text-2xl bg-black/20 h-[350px] w-[30px] left-0 flex items-center justify-center"
           onClick={() => scroll(-900)}
         >
           <Image
@@ -49,7 +49,7 @@ const Suggestion: React.FC<MovieListProps> = ({ data, title }) => {
           ))}
         </div>
         <button
-          className="absolute top-[160px] z-[1000] text-2xl bg-black/20 h-full w-[30px] right-0  flex items-start justify-center"
+          className="absolute top-0 z-[1000] text-2xl bg-black/20 h-[250px] w-[30px] right-0  flex items-center justify-center"
           onClick={() => scroll(900)}
         >
           <Image

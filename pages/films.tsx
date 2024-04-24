@@ -83,10 +83,10 @@ const Home = () => {
         <MovieList title="Suggestion for you" data={updatedMovies} />
         <MovieList title="Anime" data={anime} />
         <MovieList title="New Releases" data={newReleases} />
-        <MovieList title="Science-Fiction" data={scienceFiction} />
-        <MovieList title="Horror" data={horror} />
+        <MovieList title="Science-Fiction Movies" data={scienceFiction} />
+        <MovieList title="Horror Movies" data={horror} />
         <MovieList title="Hollywood Movies" data={HollywoodMovies} />
-        <MovieList title="Romantic Drama" data={romance} />
+        <MovieList title="Romantic Movies" data={romance} />
       </div>
     </>
   );

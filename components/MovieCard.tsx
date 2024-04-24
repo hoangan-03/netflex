@@ -22,8 +22,8 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
     "https://image.tmdb.org/t/p/original" + data.backdrop_path;
 
   return (
-    <div className="h-[16vw] w-[250px]">
-      <div className="flex-col h-full bg-zinc-900 w-[250px] transition-all duration-300 gap-2 justify-start rounded-md items-start hover:scale-125 hover:translate-y-12 z-[500] flex">
+    <div className="h-[18vw] w-[250px]">
+      <div className="flex-col h-full pb-[30px] bg-zinc-900 w-[250px] transition-all duration-300 gap-2 justify-start rounded-md items-start hover:scale-125 hover:translate-y-12 z-[500] flex">
         <img
           onClick={redirectToWatch}
           src={thumbnailUrl}

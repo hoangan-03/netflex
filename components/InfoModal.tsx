@@ -1,10 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-
 import PlayButton from "@/components/PlayButton";
 import useInfoModalStore from "@/hooks/useInfoStore";
-
-import useMovieList from "@/hooks/useMovieList";
 import { fetchCast } from "@/api/film";
 interface InfoModalProps {
   visible?: boolean;
@@ -12,7 +9,7 @@ interface InfoModalProps {
 }
 
 const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
-  const [castData, setCast] = useState<any>(null); // state variable to store the cast
+  const [castData, setCast] = useState<any>(null); 
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
 
   const { signleInfo } = useInfoModalStore();
@@ -42,7 +39,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
 
   const thumbnailUrl = "https://image.tmdb.org/t/p/original" + signleInfo?.backdrop_path;
   return (
-    <div className="z-50 transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
+    <div className="z-[650] transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
       <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-hidden">
         <div
           className={`${

@@ -78,6 +78,7 @@ const Home = () => {
       <InfoModal visible={isOpen} onClose={closeModal} />
       <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
       <Navbar />
+      
       <div className="w-full h-auto flex flex-col gap-2">
         <DisplayRandom data={updatedMovies} />
         <MovieList title="Suggestion for you" data={updatedMovies} />

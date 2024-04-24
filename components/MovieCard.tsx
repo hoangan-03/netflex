@@ -39,9 +39,9 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
           </div>
           <div className="w-auto h-[40px] max-w-[100px] flex justify-center items-center ml-4">
             <h1 className="text-white text-bold text-base">
-              {data?.original_title?.length > 20
-                ? `${data.original_title.substring(0, 20)} ...`
-                : data.original_title}
+              {data?.title?.length > 20
+                ? `${data.title.substring(0, 20)} ...`
+                : data.title}
             </h1>
           </div>
           <div
@@ -61,14 +61,22 @@ const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
           <p>
             {data.genres &&
               data.genres.length > 0 &&
-              (data.genres[0] as { name: string })?.name}{" "}
+              ((data.genres[0] as { name: string }).name === "Science Fiction"
+                ? "Sci-Fi"
+                : (data.genres[0] as { name: string }).name)}{" "}
             •{" "}
             {data.genres &&
               data.genres.length > 1 &&
-              (data.genres[1] as { name: string })?.name}
+              ((data.genres[1] as { name: string }).name === "Science Fiction"
+                ? "Sci-Fi"
+                : (data.genres[1] as { name: string }).name)}
             {data.genres &&
               data.genres.length > 2 &&
-              ` • ${(data.genres[2] as { name: string })?.name}`}
+              ` • ${
+                (data.genres[2] as { name: string }).name === "Science Fiction"
+                  ? "Sci-Fi"
+                  : (data.genres[2] as { name: string }).name
+              }`}
           </p>
         </div>
       </div>

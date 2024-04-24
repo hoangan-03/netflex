@@ -9,12 +9,12 @@ interface InfoModalProps {
 }
 
 const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
-  const [castData, setCast] = useState<any>(null); 
+  const [castData, setCast] = useState<any>(null);
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
 
   const { signleInfo } = useInfoModalStore();
 
-  console.log("this is ID", signleInfo)
+  console.log("this is ID", signleInfo);
 
   useEffect(() => {
     setIsVisible(!!visible);
@@ -22,8 +22,8 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
   useEffect(() => {
     if (signleInfo?.id) {
       fetchCast(signleInfo?.id)
-        .then(data => setCast(data))
-        .catch(error => console.error(error));
+        .then((data) => setCast(data))
+        .catch((error) => console.error(error));
     }
   }, [signleInfo]);
 
@@ -37,9 +37,10 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
     return null;
   }
 
-  const thumbnailUrl = "https://image.tmdb.org/t/p/original" + signleInfo?.backdrop_path;
+  const thumbnailUrl =
+    "https://image.tmdb.org/t/p/original" + signleInfo?.backdrop_path;
   return (
-    <div className="z-[650] transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
+    <div className="z-[65000] transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
       <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-hidden">
         <div
           className={`${
@@ -64,7 +65,7 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
             </div>
             <div className="absolute bottom-[10%] left-10">
               <p className="text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8">
-                {signleInfo?.original_title}
+                {signleInfo?.title}
               </p>
               <div className="flex flex-row gap-4 items-center">
                 <PlayButton movieId={signleInfo?.id} />
@@ -79,21 +80,42 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
                   <p className="text-green-400 font-semibold text-lg">
                     67% Match
                   </p>
-                  <p className="text-gray-300 text-lg">{signleInfo?.release_date?.substring(0, 4)}</p>
-                  <p className="text-gray-300 text-lg">{signleInfo?.runtime} {"minutes"}</p>
+                  <p className="text-gray-300 text-lg">
+                    {signleInfo?.release_date?.substring(0, 4)}
+                  </p>
+                  <p className="text-gray-300 text-lg">
+                    {signleInfo?.runtime &&
+                      `${Math.floor(signleInfo.runtime / 60)}h ${
+                        signleInfo.runtime % 60
+                      }m`}
+                  </p>
                 </div>
-                <p className="text-white text-lg w-auto mb-7">{signleInfo?.vote_average} {"/10"}</p>
+                <p className="text-white text-lg w-auto mb-7">
+                  {signleInfo?.vote_average} {"/10"}
+                </p>
 
                 <p className="text-white text-base">{signleInfo?.overview}</p>
               </div>
               <div className="w-[30%] h-full flex flex-col gap-3 justify-start items-start">
                 <div className="text-white  text-base">
                   <span className="text-gray-200 font-bold">Cast: </span>
-                  {castData?.cast[0].name}, {castData?.cast[1].name}, {castData?.cast[2].name}
+                  {castData?.cast[0].name}, {castData?.cast[1].name},{" "}
+                  {castData?.cast[2].name}
                 </div>
                 <div className="text-white  text-base">
                   <span className="text-gray-200 font-bold">Genre: </span>
-                  {(signleInfo?.genres && signleInfo?.genres.length > 0 && (signleInfo?.genres[0] as { name: string })?.name)}{", "}{(signleInfo?.genres && signleInfo?.genres.length > 0 && (signleInfo?.genres[1] as { name: string })?.name)}
+                  {signleInfo?.genres &&
+                    signleInfo?.genres.length > 0 &&
+                    (signleInfo?.genres[0] as { name: string })?.name}
+                  {signleInfo?.genres &&
+                    signleInfo?.genres.length > 1 &&
+                    `, ${(signleInfo?.genres[1] as { name: string })?.name}`}
+                  {signleInfo?.genres &&
+                    signleInfo?.genres.length > 2 &&
+                    `, ${(signleInfo?.genres[2] as { name: string })?.name}`}
+                  {signleInfo?.genres &&
+                    signleInfo?.genres.length > 3 &&
+                    `, ${(signleInfo?.genres[3] as { name: string })?.name}`}
                 </div>
               </div>
             </div>

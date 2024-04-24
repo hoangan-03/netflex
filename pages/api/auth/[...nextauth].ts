@@ -26,7 +26,7 @@ export const authOptions: AuthOptions = {
         },
         password: {
           label: 'Password',
-          type: 'passord'
+          type: 'password'
         }
       },
       async authorize(credentials) {
@@ -61,8 +61,14 @@ export const authOptions: AuthOptions = {
   jwt: {
     secret: process.env.NEXTAUTH_JWT_SECRET,
   },
-  secret: process.env.NEXTAUTH_SECRET
+  secret: process.env.NEXTAUTH_SECRET,
+  callbacks: {
+    redirect: async ({ url, baseUrl }) => {
+      return url.startsWith(baseUrl)
+        ? url
+        : baseUrl
+    }
+  }
 };
 
 export default NextAuth(authOptions);
-

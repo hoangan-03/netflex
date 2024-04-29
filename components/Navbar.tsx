@@ -69,9 +69,9 @@ const Navbar = () => {
               active={router.pathname === "/time"}
             />
           </Link>
-          <Link href="/mylist">
+          {/* <Link href="/mylist">
           <NavbarItem label="My List" active={router.pathname === "/mylist"} />
-          </Link>
+          </Link> */}
         </div>
         <div
           onClick={toggleMobileMenu}

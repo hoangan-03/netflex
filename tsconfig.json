@@ -16,6 +16,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/auth..jsx", "watchh/MovieContext.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "pages/auth.jsx", "watchh/MovieContext.jsx"],
   "exclude": ["node_modules"]
 }

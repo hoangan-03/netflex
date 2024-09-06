@@ -64,7 +64,7 @@ const Home = () => {
       <Navbar />
       
       <div className="w-full h-auto flex flex-col gap-2">
-        <DisplayRandom data={updatedMovies} />
+        <DisplayRandom data={updatedMovies} title={""} />
         <MovieList title="Suggestions for you" data={updatedMovies} />
         <MovieList title="Anime" data={anime} />
         <MovieList title="New Releases" data={newReleases} />

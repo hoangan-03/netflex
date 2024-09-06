@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import {
   BellIcon,
   MagnifyingGlassIcon,
@@ -18,6 +18,7 @@ const Navbar = () => {
   const [showBackground, setShowBackground] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const searchFormRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -53,13 +54,32 @@ const Navbar = () => {
     console.log("Search query:", searchQuery);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        searchFormRef.current &&
+        !searchFormRef.current.contains(event.target as Node)
+      ) {
+        setShowSearch(false);
+        setSearchQuery("");
+      }
+    };
+    if (showSearch) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSearch]);
+
   return (
     <nav className="w-full fixed z-[10001]">
       <div
         className={`px-4 md:px-16 py-6 flex flex-row items-center transition duration-500 ${
           showBackground ? "bg-zinc-900 bg-opacity-90" : ""
-        }`}
-      >
+        }`}>
         <Image
           src={logo}
           className="h-8 lg:h-12 w-20 object-cover"
@@ -78,9 +98,6 @@ const Navbar = () => {
               active={router.pathname === "/time"}
             />
           </Link>
-          {/* <Link href="/mylist">
-          <NavbarItem label="My List" active={router.pathname === "/mylist"} />
-          </Link> */}
         </div>
         <div
           onClick={toggleMobileMenu}
@@ -94,24 +111,28 @@ const Navbar = () => {
           />
           <MobileMenu visible={showMobileMenu} />
         </div>
-        <div className="flex flex-row ml-auto gap-7 items-center">
+        <div className="flex flex-row ml-auto gap-3 items-center">
           <div
-            className="text-gray-200 hover:text-gray-300 cursor-pointer transition"
+            className="text-gray-200 hover:text-gray-300 cursor-pointer transition duration-500"
             onClick={toggleSearch}
           >
             <MagnifyingGlassIcon className="w-6" />
           </div>
-          {showSearch && (
-            <form onSubmit={handleSearchSubmit} className="relative">
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={handleSearchChange}
-                className="bg-gray-800 text-white rounded-full px-4 py-1 focus:outline-none"
-                placeholder="Search..."
-              />
-            </form>
-          )}
+          <form
+            ref={searchFormRef}
+            onSubmit={handleSearchSubmit}
+            className={`relative transition-all duration-500 ${
+              showSearch ? "max-w-[300px] opacity-100" : "max-w-0 opacity-0"
+            }`}
+          >
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className="bg-gray-200 text-black w-full rounded-full px-5 py-2 focus:outline-none"
+              placeholder="Search for everything"
+            />
+          </form>
           <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">
             <BellIcon className="w-6" />
           </div>

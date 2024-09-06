@@ -1,13 +1,18 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import useMovieList from '@/hooks/useMovieList';
-import MovieCard from '@/components/MovieCard'; 
+import MovieCard from '@/components/MovieCard';
 import { MovieInterface } from '@/types';
-import { fetchMovie } from '@/api/film'; 
+import { fetchMovie } from '@/api/film';
 import { SearchResult } from '@/types';
+import InfoModal from '@/components/InfoModal';
+import useInfoModalStore from '@/hooks/useInfoStore';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+
 const SearchPage = () => {
   const router = useRouter();
   const { query } = router.query;
+  const { isOpen, closeModal } = useInfoModalStore();
   const { data: movies = [] } = useMovieList();
   const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
@@ -16,7 +21,7 @@ const SearchPage = () => {
       Promise.all(movies.map((movie: any) => fetchMovie(movie.videoID.toString())))
         .then((fetchedData) => {
           const filteredMovies = fetchedData.filter((movie: any) =>
-            movie.title && movie.title.toLowerCase().includes((query as string).toLowerCase())
+            movie.title && movie.title.toLowerCase().startsWith((query as string).toLowerCase())
           );
           setSearchResults(filteredMovies);
         })
@@ -24,19 +29,35 @@ const SearchPage = () => {
     }
   }, [query, movies]);
 
+  const handleBackClick = () => {
+    router.push('/');
+  };
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">Search Results for {query}</h1>
-      {searchResults.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {searchResults.map((result) => (
-            <MovieCard key={result.id.toString()} data={result as unknown as MovieInterface} />
-          ))}
+    <>
+      <InfoModal visible={isOpen} onClose={closeModal} />
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex items-center mb-4">
+          <button
+            onClick={handleBackClick}
+            className="flex items-center justify-center p-2 mr-4 rounded-full"
+          >
+            <ArrowLeftIcon className="w-5 h-5" />
+       
+          </button>
+          <h1 className="text-2xl font-bold">Search Results for {query}</h1>
         </div>
-      ) : (
-        <p>No results found.</p>
-      )}
-    </div>
+        {searchResults.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {searchResults.map((result) => (
+              <MovieCard key={result.id.toString()} data={result as unknown as MovieInterface} />
+            ))}
+          </div>
+        ) : (
+          <p>No results found.</p>
+        )}
+      </div>
+    </>
   );
 };
 

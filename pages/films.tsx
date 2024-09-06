@@ -22,7 +22,7 @@ const Home = () => {
   const [updatedMovies, setUpdatedMovies] = useState(movies);
 
   useEffect(() => {
-    Promise.all(movies.map((movie: any) => fetchMovie(movie.videoID))) 
+    Promise.all(movies.map((movie: any) => fetchMovie(movie.videoID)))
       .then((dataa) => {
         const newMovies = movies.map((movie: any) => {
           const matchingData = dataa.find((d) => d.id == movie.videoID);
@@ -72,7 +72,7 @@ const Home = () => {
         <h2 className="text-white text-6xl font-bold">Movies</h2>
         <div className="w-[200px]">
           <FormControl
-          size ="small"
+            size="small"
             fullWidth
             style={{
               backgroundColor: "black",
@@ -84,7 +84,7 @@ const Home = () => {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={selectedGenre} 
+              value={selectedGenre}
               label="Genre"
               onChange={handleChange}
               style={{ color: "white", borderColor: "white", outline: "none" }}
@@ -108,7 +108,7 @@ const Home = () => {
           </FormControl>
         </div>
       </div>
-      <div className={`w-full h-auto flex flex-col gap-2 ${selectedGenre === "Genre" ? "block":"hidden"} `}>
+      <div className={`w-full h-auto flex flex-col gap-2 ${selectedGenre === "Genre" ? "block" : "hidden"} `}>
         <DisplayRandom data={updatedMovies} title={""} />
         <MovieList title="Suggestions for you" data={updatedMovies} />
         <MovieList title="Anime Movies" data={anime} />
@@ -118,13 +118,13 @@ const Home = () => {
         <MovieList title="Hollywood Movies" data={HollywoodMovies} />
         <MovieList title="Romantic Movies" data={romance} />
       </div>
-      <div className={`w-full h-auto pt-[220px] px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block":"hidden"} `}>
-      <div className="grid grid-cols-4 gap-6 w-auto overflow-hidden px-10 pb-[220px]">
-              {filterMovies?.map((movie: MovieInterface) => (
-                <MovieCard key={movie.id} data={movie} />
-              ))}
-            </div>
-            </div>
+      <div className={`w-full h-auto pt-[220px] px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
+        <div className="grid grid-cols-4 gap-6 w-auto overflow-hidden px-10 pb-[220px]">
+          {filterMovies?.map((movie: MovieInterface) => (
+            <MovieCard key={movie.id} data={movie} />
+          ))}
+        </div>
+      </div>
     </>
   );
 };

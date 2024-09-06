@@ -7,7 +7,7 @@ import {
 import Link from "next/link";
 import MobileMenu from "@/components/MobileMenu";
 import NavbarItem from "@/components/NavbarItem";
-import logo from "@/assets/picture/logo.png";
+import logo from "@/assets/picture/netflexx.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
 const TOP_OFFSET = 66;

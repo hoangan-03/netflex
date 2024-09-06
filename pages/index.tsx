@@ -1,7 +1,7 @@
 import React from "react";
 import { NextPageContext } from "next";
 import { getSession, signOut } from "next-auth/react";
-import useCurrentUser from "@/hooks/useCurrentUser";
+
 import Navbar from "@/components/Navbar";
 import DisplayRandom from "@/components/DisplayRandom";
 import MovieList from "@/components/MovieList";
@@ -15,28 +15,12 @@ import { useState, useEffect } from "react";
 import { MovieInterface, Genre } from "../types";
 import useViewStore from "@/hooks/useViewStore";
 
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth",
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: {},
-  };
-}
-
 const Home = () => {
-  const { data: user } = useCurrentUser();
   const { data: movies = [] } = useMovieList();
   const [updatedMovies, setUpdatedMovies] = useState(movies);
 
   useEffect(() => {
-    Promise.all(movies.map((movie: any) => fetchMovie(movie.videoID))) // Add type annotation to 'movie' parameter
+    Promise.all(movies.map((movie: any) => fetchMovie(movie.videoID))) 
       .then((dataa) => {
         const newMovies = movies.map((movie: any) => {
           const matchingData = dataa.find((d) => d.id == movie.videoID);

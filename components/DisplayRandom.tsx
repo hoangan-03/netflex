@@ -1,17 +1,12 @@
 import React, { useCallback,useState,useEffect } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
-import { MovieInterface } from "@/types";
 import PlayButton from "@/components/PlayButton";
-import useBillboard from "@/hooks/useRandom";
 import useInfoModalStore from "@/hooks/useInfoStore";
+import { MovieListProps } from "@/types";
 
-interface MovieListProps {
-  data: MovieInterface[];
-}
 
-const DisplayRandom: React.FC<MovieListProps> = ({ data }) => {
+const DisplayRandom = ({ data }: MovieListProps) => {
   const { openModal } = useInfoModalStore();
-
   const [randomIndex, setRandomIndex] = useState(0);
 
   useEffect(() => {

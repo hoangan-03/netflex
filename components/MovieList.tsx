@@ -1,29 +1,12 @@
 import React, { useRef } from "react";
-import { MovieInterface } from "@/types";
 import MovieCard from "@/components/MovieCard";
-import { isEmpty } from "lodash";
 import leftIcon from "../assets/icon/left.png";
 import rightIcon from "../assets/icon/right.png";
-import rightBlueIcon from "../assets/icon/right-blue.png";
 import Image from "next/image";
-import { StaticImageData } from "next/image";
 import useViewStore from "@/hooks/useViewStore";
+import { MovieListProps, ScrollButtonProps } from "@/types";
 
-interface MovieListProps {
-  data: MovieInterface[];
-  title: string;
-}
-interface ScrollButtonProps {
-  direction: "left" | "right";
-  scroll: () => void;
-  icon: StaticImageData;
-}
-
-const ScrollButton: React.FC<ScrollButtonProps> = ({
-  direction,
-  scroll,
-  icon,
-}) => (
+const ScrollButton = ({ direction, scroll, icon }: ScrollButtonProps) => (
   <button
     className={`absolute top-0 z-[1000] text-2xl bg-black/20 h-[350px] w-[30px] ${direction}-0  flex items-center justify-center`}
     onClick={scroll}
@@ -38,10 +21,10 @@ const ScrollButton: React.FC<ScrollButtonProps> = ({
   </button>
 );
 
-const MovieList: React.FC<MovieListProps> = ({ data, title }) => {
+const MovieList = ({ data, title }: MovieListProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const {openModal} = useViewStore();
+  const { openModal } = useViewStore();
 
   const scroll = (scrollOffset: number) => {
     if (scrollContainerRef.current) {

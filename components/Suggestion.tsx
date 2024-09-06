@@ -1,16 +1,11 @@
 import React, { useRef } from "react";
-import { MovieInterface } from "@/types";
 import MovieCard from "@/components/MovieCard";
-import { isEmpty } from "lodash";
 import leftIcon from "../assets/icon/left.png";
 import rightIcon from "../assets/icon/right.png";
 import Image from "next/image";
-interface MovieListProps {
-  data: MovieInterface[];
-  title: string;
-}
+import { MovieListProps } from "@/types";
 
-const Suggestion: React.FC<MovieListProps> = ({ data, title }) => {
+const Suggestion = ({ data, title }: MovieListProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const scroll = (scrollOffset: number) => {

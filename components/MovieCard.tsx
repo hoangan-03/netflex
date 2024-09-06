@@ -1,17 +1,12 @@
- /* eslint-disable */ 
-import React, { useCallback } from "react";
+/* eslint-disable @next/next/no-img-element */
+import { useCallback } from "react";
 import { useRouter } from "next/router";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { PlayIcon } from "@heroicons/react/24/solid";
-
-import { MovieInterface } from "../types";
 import useInfoModalStore from "../hooks/useInfoStore";
+import { MovieCardProps } from "../types";
 
-interface MovieCardProps {
-  data: MovieInterface;
-}
-
-const MovieCard: React.FC<MovieCardProps> = ({ data }) => {
+const MovieCard= ({ data }: MovieCardProps) => {
   const router = useRouter();
   const { openModal } = useInfoModalStore();
 

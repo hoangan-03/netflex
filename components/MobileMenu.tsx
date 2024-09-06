@@ -1,10 +1,7 @@
 import React from 'react';
+import { MobileMenuProps } from '@/types';
 
-interface MobileMenuProps {
-  visible?: boolean;
-}
-
-const MobileMenu: React.FC<MobileMenuProps> = ({ visible }) => {
+const MobileMenu = ({ visible }: MobileMenuProps) => {
   if (!visible) {
     return null;
   }
@@ -32,7 +29,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ visible }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default MobileMenu;

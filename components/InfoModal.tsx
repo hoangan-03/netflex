@@ -3,19 +3,12 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import PlayButton from "@/components/PlayButton";
 import useInfoModalStore from "@/hooks/useInfoStore";
 import { fetchCast } from "@/api/film";
-interface InfoModalProps {
-  visible?: boolean;
-  onClose: any;
-}
+import { InfoModalProps } from "@/types";
 
-const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
+const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   const [castData, setCast] = useState<any>(null);
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
-
   const { signleInfo } = useInfoModalStore();
-
-  console.log("this is ID", signleInfo);
-
   useEffect(() => {
     setIsVisible(!!visible);
   }, [visible]);
@@ -56,7 +49,6 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
               src={signleInfo?.videoUrl}
               className="w-full brightness-[60%] object-cover h-full"
             />
-
             <div
               onClick={handleClose}
               className="cursor-pointer absolute top-3 right-3 h-10 w-10 rounded-full bg-black bg-opacity-70 flex items-center justify-center"
@@ -72,15 +64,11 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
               </div>
             </div>
           </div>
-
           <div className="px-12 py-8">
             <div className="flex flex-row gap-8 justify-between w-full h-full">
               <div className="flex flex-col w-[70%] h-full">
                 <div className="flex flex-row items-center gap-3">
-                  <p className="text-green-400 font-semibold text-lg">
-                    67% Match
-                  </p>
-                  <p className="text-gray-300 text-lg">
+                  <p className="text-lg text-green-400 ">
                     {signleInfo?.release_date?.substring(0, 4)}
                   </p>
                   <p className="text-gray-300 text-lg">
@@ -91,9 +79,8 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
                   </p>
                 </div>
                 <p className="text-white text-lg w-auto mb-7">
-                  {signleInfo?.vote_average} {"/10"}
+                  {signleInfo?.vote_average.toFixed(1)} {"/10"}
                 </p>
-
                 <p className="text-white text-base">{signleInfo?.overview}</p>
               </div>
               <div className="w-[30%] h-full flex flex-col gap-3 justify-start items-start">

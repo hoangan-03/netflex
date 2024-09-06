@@ -1,19 +1,9 @@
-import React, { useEffect, useState,SetStateAction } from 'react';
 import { PlayIcon } from '@heroicons/react/24/solid';
 import { useRouter } from 'next/router';
-import { PrismaClient } from '@prisma/client';
-import useMovie from '@/hooks/useMovie';
+import { PlayButtonProps } from '@/types';
 
-interface PlayButtonProps {
-  movieId: any;
-}
-
-const PlayButton: React.FC<PlayButtonProps> = ({ movieId }) => {
+const PlayButton= ({ movieId }:PlayButtonProps ) => {
   const router = useRouter();
-
-  const movie = useMovie(movieId);
-  console.log("movie",movie);
-
   return (
     <button 
       onClick={() => router.push(`/watch/${movieId}`)}

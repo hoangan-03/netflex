@@ -1,7 +1,4 @@
 import React from "react";
-import { NextPageContext } from "next";
-import { getSession, signOut } from "next-auth/react";
-import useCurrentUser from "@/hooks/useCurrentUser";
 import Navbar from "@/components/Navbar";
 import DisplayRandom from "@/components/DisplayRandom";
 import MovieList from "@/components/MovieList";
@@ -18,29 +15,14 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MovieCard from "@/components/MovieCard";
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/auth",
-        permanent: false,
-      },
-    };
-  }
-  return {
-    props: {},
-  };
-}
 
 const Home = () => {
-  const { data: user } = useCurrentUser();
   const [selectedGenre, setGenre] = useState<string>("Genre");
   const { data: movies = [] } = useMovieList();
   const [updatedMovies, setUpdatedMovies] = useState(movies);
 
   useEffect(() => {
-    Promise.all(movies.map((movie: any) => fetchMovie(movie.videoID))) // Add type annotation to 'movie' parameter
+    Promise.all(movies.map((movie: any) => fetchMovie(movie.videoID))) 
       .then((dataa) => {
         const newMovies = movies.map((movie: any) => {
           const matchingData = dataa.find((d) => d.id == movie.videoID);
@@ -86,7 +68,7 @@ const Home = () => {
       <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
 
       <Navbar />
-      <div className="w-full h-[200px] bg-black/20 z-[10000] pl-[70px] absolute top-0 flex flex-row pt-[100px] gap-12 justify-start items-center">
+      <div className="w-full h-[200px] z-[10000] pl-[70px] absolute top-0 flex flex-row pt-[100px] gap-12 justify-start items-center">
         <h2 className="text-white text-6xl font-bold">Movies</h2>
         <div className="w-[200px]">
           <FormControl
@@ -127,7 +109,7 @@ const Home = () => {
         </div>
       </div>
       <div className={`w-full h-auto flex flex-col gap-2 ${selectedGenre === "Genre" ? "block":"hidden"} `}>
-        <DisplayRandom data={updatedMovies} />
+        <DisplayRandom data={updatedMovies} title={""} />
         <MovieList title="Suggestions for you" data={updatedMovies} />
         <MovieList title="Anime Movies" data={anime} />
         <MovieList title="New Releases" data={newReleases} />

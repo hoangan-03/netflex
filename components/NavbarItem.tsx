@@ -1,11 +1,7 @@
 import React from 'react';
+import { NavbarItemProps } from '@/types';
 
-interface NavbarItemProps {
-  label: string;
-  active?: boolean;
-}
-
-const NavbarItem: React.FC<NavbarItemProps> = ({ label, active }) => {
+const NavbarItem = ({ label, active }: NavbarItemProps) => {
   return (
     <div className={active ? 'text-white cursor-default font-extrabold' : 'text-gray-200 hover:text-gray-300 cursor-pointer transition'}>
       {label}

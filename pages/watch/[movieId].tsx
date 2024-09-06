@@ -24,7 +24,6 @@ const Watch = () => {
         />
         <h2 className="text-2xl text-white font-bold">Watching: {movieName}</h2>
       </nav>
-
       <iframe
         className="h-full w-full z-0"
         src={data?.videoUrl}

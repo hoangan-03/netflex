@@ -1,20 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import useViewStore from "@/hooks/useViewStore";
 import MovieCard from "./MovieCard";
+import { ViewModalProps } from "@/types";
 
-interface ViewModalProps {
-  visible?: boolean;
-  onClose: any;
-}
-
-const InfoModal: React.FC<ViewModalProps> = ({ visible, onClose }) => {
+const InfoModal = ({ visible, onClose }: ViewModalProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
-
   const { data, title } = useViewStore();
-
-  console.log("this is data", data);
-
   useEffect(() => {
     setIsVisible(!!visible);
   }, [visible]);

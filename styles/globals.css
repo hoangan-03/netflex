@@ -78,3 +78,20 @@ body {
 .netflix{
   font-family: 'Netflix Sans';
 }
+
+/* .zoom-in .selected {
+  transform: scale(1);
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 10;
+} */
+
+.zoom-in .selected {
+  transform: scale(1);
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+ 
+}

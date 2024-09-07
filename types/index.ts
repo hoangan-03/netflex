@@ -15,6 +15,8 @@ export interface MovieInterface {
   original_language: string;
   origin_country: Array<string>;
   backdrop_path: string; 
+  popularity: number;
+  tagline: string;
 
 }
 export interface Genre {

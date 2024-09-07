@@ -98,6 +98,12 @@ const Navbar = () => {
               active={router.pathname === "/time"}
             />
           </Link>
+          <Link href="/random">
+            <NavbarItem
+              label="Random Selection"
+              active={router.pathname === "/random"}
+            />
+          </Link>
         </div>
         <div
           onClick={toggleMobileMenu}
@@ -130,7 +136,7 @@ const Navbar = () => {
               value={searchQuery}
               onChange={handleSearchChange}
               className="bg-gray-200 text-black w-full rounded-full px-5 py-2 focus:outline-none"
-              placeholder="Search for everything"
+              placeholder="Search for title"
             />
           </form>
           <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition">

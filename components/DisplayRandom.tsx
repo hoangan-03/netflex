@@ -43,21 +43,21 @@ const DisplayRandom = ({ data }: MovieListProps) => {
             className="
             bg-white
             text-white
-              bg-opacity-30 
-              rounded-md 
+              bg-opacity-20 
+              backdrop-blur-lg
+              rounded-3xl 
               py-1 md:py-2 
-              px-2 md:px-4
+              px-3 md:px-6
               w-auto 
               text-xs lg:text-lg 
               font-semibold
               flex
               flex-row
               items-center
-              hover:bg-opacity-20
+              hover:bg-opacity-40
               transition
-            "
-          >
-            <InformationCircleIcon className="w-4 md:w-7 mr-1" />
+            ">
+            <InformationCircleIcon className="w-3 md:w-7 mr-1" />
             More Info
           </button>
         </div>

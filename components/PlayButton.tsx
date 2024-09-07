@@ -9,9 +9,9 @@ const PlayButton= ({ movieId }:PlayButtonProps ) => {
       onClick={() => router.push(`/watch/${movieId}`)}
       className="
         bg-white 
-        rounded-md 
+        rounded-3xl 
         py-1 md:py-2 
-        px-2 md:px-4
+        px-3 md:px-6
         w-auto 
         text-xs lg:text-lg 
         font-semibold
@@ -24,7 +24,7 @@ const PlayButton= ({ movieId }:PlayButtonProps ) => {
         "
       >
         <PlayIcon className="w-4 md:w-7 text-black mr-1" />
-        Play
+        Watch Movie
     </button>
   );
   

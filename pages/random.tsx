@@ -84,7 +84,7 @@ const Random = () => {
   const formatRuntime = (runtime: number) => {
     const hours = Math.floor(runtime / 60);
     const minutes = runtime % 60;
-    const seconds = Math.floor(Math.random() * 60); // Generate random seconds
+    const seconds = Math.floor(Math.random() * 60); 
     return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
       .toString()
       .padStart(2, "0")}`;
@@ -149,7 +149,7 @@ const Random = () => {
                       {" "}
                       <h2 className="text-white text-xl font-bold">
                         {castData?.cast[0].name} | {castData?.cast[1].name} |{" "}
-                        {castData?.cast[2].name}
+                        {castData?.cast[2].name} | {castData?.cast[3].name}
                       </h2>
                     </div>
                     <div className="flex flex-col gap-4 justify-start items-center">
@@ -204,7 +204,7 @@ const Random = () => {
                   </div>
                   <div className="flex flex-col justify-between px-[100px]  py-[50px] h-full w-[35vw] items-end ">
                     <div></div>
-                                       <div className="flex flex-col gap-4 justify-start items-center">
+                    <div className="flex flex-col gap-4 justify-start items-center">
                       <h1 className="text-white text-3xl w-auto font-extrabold backdrop-blur-sm p-2 rounded-2xl bg-black/10">
                         {selectedMovie.tagline
                           ? `"${selectedMovie.tagline}"`
@@ -231,7 +231,7 @@ const Random = () => {
                     onClick={() => router.push(`/watch/${selectedMovie.id}`)}
                   >
                     <PlayIcon
-                      className="w-8 h-8 text-red-700 ml-1"
+                      className="w-8 h-8 text-sky-700 ml-1"
                       style={{ opacity: 0.5 }}
                     />
                   </button>

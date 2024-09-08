@@ -38,7 +38,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
         <div
           className={`${
             isVisible ? "scale-100" : "scale-0"
-          } transform duration-300 relative flex-auto bg-zinc-900 drop-shadow-md`}
+          } transform duration-300 relative flex-auto max-h-[90vh] bg-zinc-900 drop-shadow-md`}
         >
           <div className="relative h-96">
             <video

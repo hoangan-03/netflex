@@ -6,7 +6,12 @@ import { fetchMovie, fetchCast } from "@/api/film";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { CurrencyDollarIcon, StarIcon, Bars2Icon } from "@heroicons/react/24/outline";
+import {
+  CurrencyDollarIcon,
+  StarIcon,
+  Bars2Icon,
+  ArrowsRightLeftIcon,
+} from "@heroicons/react/24/outline";
 
 const getRandomMovies = (movies: MovieInterface[], count: number) => {
   const shuffled = [...movies].sort(() => 0.5 - Math.random());
@@ -39,6 +44,7 @@ const Random = () => {
   const [updatedMovies, setUpdatedMovies] = useState(movies);
   const [randomMovies, setRandomMovies] = useState<MovieInterface[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<MovieInterface | null>(null);
+  const [hoveredMovie, setHoveredMovie] = useState<MovieInterface | null>(null);
   const router = useRouter();
 
   const [isZoomingIn, setIsZoomingIn] = useState(false);
@@ -86,24 +92,49 @@ const Random = () => {
     setIsZoomingIn(false);
     setTimeout(() => {
       setSelectedMovie(null);
-    }, 200); 
+    }, 200);
   };
+
+  const handleShuffleClick = () => {
+    console.log("Shuffle button clicked");
+    setRandomMovies(getRandomMovies(updatedMovies, 10));
+  };
+
   return (
     <>
       <Navbar />
-      <div className={`w-screen h-screen bg-black relative overflow-hidden ${isZoomingIn ? "zoom-in" : "zoom-out"}`}>
+      <div
+        className={`w-screen h-screen bg-black relative overflow-hidden ${
+          isZoomingIn ? "zoom-in" : "zoom-out"
+        } ${hoveredMovie ? "hovering" : ""}`}
+      >
+        <div className="absolute top-20 left-[50%] transform -translate-x-1/2 flex justify-center items-center">
+          <h2 className="text-white text-2xl font-bold">
+            {hoveredMovie?.title}
+          </h2>
+        </div>
+        <button onClick={handleShuffleClick} className="cursor-pointer absolute z-[9] bottom-10 left-1/2 transform -translate-x-1/2 w-auto h-auto px-3 bg-white rounded-lg flex items-center justify-center text-2xl font-bold">
+          <ArrowsRightLeftIcon className="h-8 w-8 text-black" />
+        </button>
         <div
-          className={`absolute inset-0 px-[200px] py-[150px] transition-transform duration-1000 flex flex-row gap-3 ${isZoomingIn ? "zoom-in" : ""
-            }`}
+          className={`absolute inset-0 px-[200px] py-[150px] transition-transform duration-1000 flex flex-row gap-3 ${
+            isZoomingIn ? "zoom-in" : ""
+          }`}
         >
           {randomMovies.map((movie) => (
             <div
               key={movie.id}
-              className={`${selectedMovie && selectedMovie.id === movie.id
-                ? "absolute"
-                : "flex hover:scale-125 cursor-pointer"
-                } bg-cover bg-center transition-all duration-400 hover:z-10 z-[5] ${selectedMovie && selectedMovie.id === movie.id ? " selected" : ""
-                }`}
+              className={`${
+                selectedMovie && selectedMovie.id === movie.id
+                  ? "absolute"
+                  : "flex hover:scale-110 cursor-pointer"
+              } bg-cover bg-center transition-all duration-400 hover:z-10 z-[5] ${
+                selectedMovie && selectedMovie.id === movie.id
+                  ? " selected"
+                  : ""
+              } ${
+                hoveredMovie && hoveredMovie.id !== movie.id ? "filtered" : ""
+              }`}
               style={{
                 backgroundImage: `url("https://image.tmdb.org/t/p/original${movie.backdrop_path}")`,
                 width:
@@ -134,6 +165,8 @@ const Random = () => {
                     : "all 0.5s ease-in-out",
               }}
               onClick={(event) => handleMovieClick(movie, event)}
+              onMouseEnter={() => setHoveredMovie(movie)}
+              onMouseLeave={() => setHoveredMovie(null)}
             >
               {selectedMovie && selectedMovie.id === movie.id && (
                 <div className="inset-0 h-screen w-screen flex flex-row justify-between relative">
@@ -231,7 +264,7 @@ const Random = () => {
                     className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-auto h-auto px-2 bg-white rounded-lg flex items-center justify-center text-2xl font-bold"
                     onClick={handleBackClick}
                   >
-                    <Bars2Icon className="h-8 w-8 text-gray-500" />
+                    <Bars2Icon className="h-8 w-8 text-black" />
                   </button>
                 </div>
               )}

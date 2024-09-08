@@ -93,5 +93,11 @@ body {
   width: 100vw;
   height: 100vh;
   z-index: 10;
- 
+}
+
+.zoom-out .selected {
+  transform: scale(1);
+  width: 20vw;
+  height: 70vh;
+  z-index: 5;
 }

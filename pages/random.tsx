@@ -2,27 +2,43 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import useMovieList from "@/hooks/useMovieList";
 import { MovieInterface } from "../types";
-import { fetchMovie } from "@/api/film";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import { CurrencyDollarIcon } from "@heroicons/react/24/outline";
-import { StarIcon } from "@heroicons/react/24/outline";
-import useInfoModalStore from "@/hooks/useInfoStore";
-import { fetchCast } from "@/api/film";
-import PlayButton from "@/components/PlayButton";
+import { fetchMovie, fetchCast } from "@/api/film";
 import { PlayIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/router";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { CurrencyDollarIcon, StarIcon, Bars2Icon } from "@heroicons/react/24/outline";
+
 const getRandomMovies = (movies: MovieInterface[], count: number) => {
   const shuffled = [...movies].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
+};
+
+const formatRevenue = (revenue: number) => {
+  if (revenue >= 1_000_000_000) {
+    return (revenue / 1_000_000_000).toFixed(1) + "B";
+  } else if (revenue >= 1_000_000) {
+    return (revenue / 1_000_000).toFixed(1) + "M";
+  } else if (revenue >= 1_000) {
+    return (revenue / 1_000).toFixed(1) + "K";
+  } else {
+    return revenue.toString();
+  }
+};
+
+const formatRuntime = (runtime: number) => {
+  const hours = Math.floor(runtime / 60);
+  const minutes = runtime % 60;
+  const seconds = Math.floor(Math.random() * 60); // Generate random seconds
+  return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
+    .toString()
+    .padStart(2, "0")}`;
 };
 
 const Random = () => {
   const { data: movies = [] } = useMovieList();
   const [updatedMovies, setUpdatedMovies] = useState(movies);
   const [randomMovies, setRandomMovies] = useState<MovieInterface[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<MovieInterface | null>(
-    null
-  );
+  const [selectedMovie, setSelectedMovie] = useState<MovieInterface | null>(null);
   const router = useRouter();
 
   const [isZoomingIn, setIsZoomingIn] = useState(false);
@@ -56,6 +72,7 @@ const Random = () => {
       setIsFullScreen(true);
     }, 200);
   };
+
   const [castData, setCast] = useState<any>(null);
   useEffect(() => {
     if (selectedMovie?.id) {
@@ -66,51 +83,27 @@ const Random = () => {
   }, [selectedMovie]);
 
   const handleBackClick = () => {
-    setSelectedMovie(null);
     setIsZoomingIn(false);
-    setIsFullScreen(false);
+    setTimeout(() => {
+      setSelectedMovie(null);
+    }, 200); 
   };
-  const formatRevenue = (revenue: number) => {
-    if (revenue >= 1_000_000_000) {
-      return (revenue / 1_000_000_000).toFixed(1) + "B";
-    } else if (revenue >= 1_000_000) {
-      return (revenue / 1_000_000).toFixed(1) + "M";
-    } else if (revenue >= 1_000) {
-      return (revenue / 1_000).toFixed(1) + "K";
-    } else {
-      return revenue.toString();
-    }
-  };
-  const formatRuntime = (runtime: number) => {
-    const hours = Math.floor(runtime / 60);
-    const minutes = runtime % 60;
-    const seconds = Math.floor(Math.random() * 60); 
-    return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
   return (
     <>
       <Navbar />
-      <div className="w-screen h-screen bg-black relative overflow-hidden">
+      <div className={`w-screen h-screen bg-black relative overflow-hidden ${isZoomingIn ? "zoom-in" : "zoom-out"}`}>
         <div
-          className={`absolute inset-0 px-[200px] py-[150px] transition-transform duration-1000 flex flex-row gap-3 ${
-            isZoomingIn ? "zoom-in" : ""
-          }`}
+          className={`absolute inset-0 px-[200px] py-[150px] transition-transform duration-1000 flex flex-row gap-3 ${isZoomingIn ? "zoom-in" : ""
+            }`}
         >
           {randomMovies.map((movie) => (
             <div
               key={movie.id}
-              className={`${
-                selectedMovie && selectedMovie.id === movie.id
-                  ? "absolute"
-                  : "flex hover:scale-125 cursor-pointer"
-              } bg-cover bg-center transition-all duration-400 hover:z-10 z-[5] ${
-                selectedMovie && selectedMovie.id === movie.id
-                  ? " selected"
-                  : ""
-              }`}
+              className={`${selectedMovie && selectedMovie.id === movie.id
+                ? "absolute"
+                : "flex hover:scale-125 cursor-pointer"
+                } bg-cover bg-center transition-all duration-400 hover:z-10 z-[5] ${selectedMovie && selectedMovie.id === movie.id ? " selected" : ""
+                }`}
               style={{
                 backgroundImage: `url("https://image.tmdb.org/t/p/original${movie.backdrop_path}")`,
                 width:
@@ -143,10 +136,9 @@ const Random = () => {
               onClick={(event) => handleMovieClick(movie, event)}
             >
               {selectedMovie && selectedMovie.id === movie.id && (
-                <div className="inset-0 h-screen w-screen flex flex-row justify-between">
+                <div className="inset-0 h-screen w-screen flex flex-row justify-between relative">
                   <div className="flex flex-col bg-black/10 justify-between px-[100px] pt-[150px] pb-[50px] h-full w-[45vw] items-start ">
                     <div>
-                      {" "}
                       <h2 className="text-white text-xl font-bold">
                         {castData?.cast[0].name} | {castData?.cast[1].name} |{" "}
                         {castData?.cast[2].name} | {castData?.cast[3].name}
@@ -234,6 +226,12 @@ const Random = () => {
                       className="w-8 h-8 text-sky-700 ml-1"
                       style={{ opacity: 0.5 }}
                     />
+                  </button>
+                  <button
+                    className="absolute bottom-10 left-1/2 transform -translate-x-1/2 w-auto h-auto px-2 bg-white rounded-lg flex items-center justify-center text-2xl font-bold"
+                    onClick={handleBackClick}
+                  >
+                    <Bars2Icon className="h-8 w-8 text-gray-500" />
                   </button>
                 </div>
               )}

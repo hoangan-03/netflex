@@ -33,14 +33,14 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   const thumbnailUrl =
     "https://image.tmdb.org/t/p/original" + signleInfo?.backdrop_path;
   return (
-    <div className="z-[65000] transition duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
+    <div className="z-[65000] transition w-auto duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
       <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-hidden">
         <div
           className={`${
             isVisible ? "scale-100" : "scale-0"
           } transform duration-300 relative flex-auto max-h-[90vh] bg-zinc-900 drop-shadow-md`}
         >
-          <div className="relative h-96">
+          <div className="relative h-48 md:h-96">
             <video
               poster={thumbnailUrl}
               autoPlay
@@ -64,7 +64,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
               </div>
             </div>
           </div>
-          <div className="px-12 py-8">
+          <div className="px-6 md:px-12 py-4 md:py-8">
             <div className="flex flex-row gap-8 justify-between w-full h-full">
               <div className="flex flex-col w-[70%] h-full">
                 <div className="flex flex-row items-center gap-3">

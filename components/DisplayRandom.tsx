@@ -1,9 +1,9 @@
-import React, { useCallback,useState,useEffect } from "react";
+/* eslint-disable @next/next/no-img-element */
+import React, { useCallback, useState, useEffect } from "react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import PlayButton from "@/components/PlayButton";
 import useInfoModalStore from "@/hooks/useInfoStore";
 import { MovieListProps } from "@/types";
-
 
 const DisplayRandom = ({ data }: MovieListProps) => {
   const { openModal } = useInfoModalStore();
@@ -16,25 +16,25 @@ const DisplayRandom = ({ data }: MovieListProps) => {
   const handleOpenModal = useCallback(() => {
     openModal(data[randomIndex]);
   }, [openModal, data, randomIndex]);
+  const overview = data[randomIndex]?.overview;
+  const truncatedOverview =
+    overview && overview.length > 250 ? `${overview.slice(0, 250)}...` : overview;
 
   const thumbnailUrl =
     "https://image.tmdb.org/t/p/original" + data[randomIndex]?.backdrop_path;
   return (
-    <div className="relative h-[56.25vw] w-full overflow-hidden">
-      <video
-        poster={thumbnailUrl}
-        className="w-full h-[56.25vw] object-cover brightness-[60%] transition duration-500"
-        autoPlay
-        muted
-        loop
-        src={data[randomIndex]?.videoUrl}
-      ></video>
-      <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
-        <p className="text-white text-1xl md:text-5xl h-full w-[50%] lg:text-6xl font-bold drop-shadow-xl">
+    <div className="relative h-[90vw] md:h-[56.25vw] mb-8  w-full ">
+      <img
+        src={thumbnailUrl}
+        alt="Movie Thumbnail"
+        className="w-full h-full object-cover brightness-[60%] transition duration-500"
+      />
+      <div className="absolute top-[30%] ml-16 w-[80%] md:w-full h-auto mb-8">
+        <p className="text-white text-xl md:text-5xl h-full w-full md:w-[50%] lg:text-6xl font-bold drop-shadow-xl">
           {data[randomIndex]?.title}
         </p>
-        <p className="text-white text-[8px] md:text-lg mt-3 md:mt-8 w-[90%] md:w-[80%] lg:w-[50%] drop-shadow-xl">
-          {data[randomIndex]?.overview}
+        <p className="text-white text-base text-justify md:text-lg mt-1 md:mt-8 w-[90%] md:w-[80%] lg:w-[50%] drop-shadow-xl">
+          {truncatedOverview}
         </p>
         <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
           <PlayButton movieId={data[randomIndex]?.id} />
@@ -56,7 +56,8 @@ const DisplayRandom = ({ data }: MovieListProps) => {
               items-center
               hover:bg-opacity-40
               transition
-            ">
+            "
+          >
             <InformationCircleIcon className="w-3 md:w-7 mr-1" />
             More Info
           </button>

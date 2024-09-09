@@ -8,7 +8,7 @@ import { MovieListProps, ScrollButtonProps } from "@/types";
 
 const ScrollButton = ({ direction, scroll, icon }: ScrollButtonProps) => (
   <button
-    className={`absolute top-0 z-[1000] text-2xl bg-black/20 h-[350px] w-[30px] ${direction}-0  flex items-center justify-center`}
+    className={`absolute top-0 z-[1000] bg-black/20 h-[350px] w-[30px] ${direction}-0  flex items-center justify-center`}
     onClick={scroll}
   >
     <Image
@@ -37,7 +37,7 @@ const MovieList = ({ data, title }: MovieListProps) => {
 
   return (
     <div className="px-4 md:px-12 mt-4 mb-8">
-      <div className="w-full relative h-[420px] overflow-hidden">
+      <div className="w-full relative h-[300px] md:h-[420px] overflow-hidden">
         <div className="w-full h-auto flex flex-row gap-4 justify-start items-center mb-8 ">
           <h1 className="pl-10 text-white text-base md:text-2xl lg:text-3xl font-semibold w-auto h-auto">
             {title}

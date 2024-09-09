@@ -15,6 +15,7 @@ import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MovieCard2 from "@/components/MovieCard2";
+import { update } from "lodash";
 
 const Home = () => {
   const [selectedGenre, setGenre] = useState<string>("Genre");
@@ -62,6 +63,10 @@ const Home = () => {
   const filterMovies = updatedMovies.filter((movie: MovieInterface) =>
     movie.genres?.some((genre: Genre) => genre.name === selectedGenre)
   );
+  const popularest = updatedMovies.filter(
+    (movie: MovieInterface) => movie.popularity > 140
+  );
+  console.log("dasd",popularest);
   return (
     <>
       <InfoModal visible={isOpen} onClose={closeModal} />
@@ -110,7 +115,7 @@ const Home = () => {
       </div>
       <div className={`w-full h-auto flex flex-col gap-2 ${selectedGenre === "Genre" ? "block" : "hidden"} `}>
         <DisplayRandom data={updatedMovies} title={""} />
-        <MovieList title="Suggestions for you" data={updatedMovies} />
+        <MovieList title="Suggestions for you" data={popularest} />
         <MovieList title="Anime Movies" data={anime} />
         <MovieList title="New Releases" data={newReleases} />
         <MovieList title="Science-Fiction Movies" data={scienceFiction} />

@@ -1,10 +1,8 @@
 import React from 'react';
 import { MobileMenuProps } from '@/types';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 const MobileMenu = ({ visible }: MobileMenuProps) => {
-  const router = useRouter();
   if (!visible) {
     return null;
   }

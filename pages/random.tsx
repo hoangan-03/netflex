@@ -13,10 +13,14 @@ import {
   ArrowsRightLeftIcon,
 } from "@heroicons/react/24/outline";
 
+
+
 const getRandomMovies = (movies: MovieInterface[], count: number) => {
   const shuffled = [...movies].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
+
+
 
 const formatRevenue = (revenue: number) => {
   if (revenue >= 1_000_000_000) {
@@ -40,6 +44,23 @@ const formatRuntime = (runtime: number) => {
 };
 
 const Random = () => {
+  const [movieCount, setMovieCount] = useState(10);
+
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth < 1280) {
+      setMovieCount(5);
+    } else {
+      setMovieCount(10); 
+    }
+  };
+
+  window.addEventListener("resize", handleResize);
+  handleResize();
+
+  return () => window.removeEventListener("resize", handleResize);
+}, []);
+
   const { data: movies = [] } = useMovieList();
   const [updatedMovies, setUpdatedMovies] = useState(movies);
   const [randomMovies, setRandomMovies] = useState<MovieInterface[]>([]);
@@ -63,11 +84,12 @@ const Random = () => {
       .catch((error) => console.error(error));
   }, [movies]);
 
-  useEffect(() => {
-    if (updatedMovies.length > 0) {
-      setRandomMovies(getRandomMovies(updatedMovies, 10));
-    }
-  }, [updatedMovies]);
+useEffect(() => {
+  if (updatedMovies.length > 0) {
+    setRandomMovies(getRandomMovies(updatedMovies, movieCount));
+  }
+}, [updatedMovies, movieCount]);
+
 
   const handleMovieClick = (movie: MovieInterface, event: React.MouseEvent) => {
     const rect = (event.target as HTMLElement).getBoundingClientRect();
@@ -97,7 +119,7 @@ const Random = () => {
 
   const handleShuffleClick = () => {
     console.log("Shuffle button clicked");
-    setRandomMovies(getRandomMovies(updatedMovies, 10));
+    setRandomMovies(getRandomMovies(updatedMovies, movieCount));
   };
 
   return (
@@ -117,7 +139,7 @@ const Random = () => {
           <ArrowsRightLeftIcon className="h-8 w-8 text-black" />
         </button>
         <div
-          className={`absolute inset-0 px-[200px] py-[150px] transition-transform duration-1000 flex flex-row gap-3 ${
+          className={`absolute inset-0 px-6 xl:px-[200px] py-[150px] transition-transform duration-1000 flex flex-row gap-3 ${
             isZoomingIn ? "zoom-in" : ""
           }`}
         >
@@ -170,9 +192,9 @@ const Random = () => {
             >
               {selectedMovie && selectedMovie.id === movie.id && (
                 <div className="inset-0 h-screen w-screen flex flex-row justify-between relative">
-                  <div className="flex flex-col bg-black/10 justify-between px-[100px] pt-[150px] pb-[50px] h-full w-[45vw] items-start ">
+                  <div className="flex flex-col bg-black/10 justify-between  md:px-[100px] px-5 pt-[150px] pb-[50px] h-full w-[40vw] items-start ">
                     <div>
-                      <h2 className="text-white text-xl font-bold">
+                      <h2 className="text-white text-lg md:text-xl font-bold">
                         {castData?.cast[0].name} | {castData?.cast[1].name} |{" "}
                         {castData?.cast[2].name} | {castData?.cast[3].name}
                       </h2>
@@ -213,7 +235,7 @@ const Random = () => {
                         </div>
                       </div>
                       <div className="w-full flex flex-row gap-10 items-start ">
-                        <h2 className="text-white font-extrabold text-4xl mb-4">
+                        <h2 className="text-white font-extrabold text-3xl md:text-4xl mb-4">
                           {selectedMovie.title}
                         </h2>
                         <div className="flex flex-col">
@@ -227,10 +249,10 @@ const Random = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex flex-col justify-between px-[100px]  py-[50px] h-full w-[35vw] items-end ">
+                  <div className="flex flex-col justify-between px-5 md:px-[100px] py-0 md:py-[50px] h-full w-[35vw] items-end ">
                     <div></div>
                     <div className="flex flex-col gap-4 justify-start items-center">
-                      <h1 className="text-white text-3xl w-auto font-extrabold backdrop-blur-sm p-2 rounded-2xl bg-black/10">
+                      <h1 className="text-white text-xl md:text-3xl mt-5 md:mt-0 w-auto font-extrabold backdrop-blur-sm p-2 rounded-2xl bg-black/10">
                         {selectedMovie.tagline
                           ? `"${selectedMovie.tagline}"`
                           : selectedMovie.tagline}

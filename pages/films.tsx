@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MovieCard from "@/components/MovieCard";
+import MovieCard2 from "@/components/MovieCard2";
 
 const Home = () => {
   const [selectedGenre, setGenre] = useState<string>("Genre");
@@ -68,9 +68,9 @@ const Home = () => {
       <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
 
       <Navbar />
-      <div className="w-full h-[200px] z-[10000] pl-[70px] absolute top-0 flex flex-row pt-[100px] gap-12 justify-start items-center">
-        <h2 className="text-white text-6xl font-bold">Movies</h2>
-        <div className="w-[200px]">
+      <div className="w-full h-auto md:h-[200px] z-[10000] pl-[70px] absolute top-0 flex flex-row pt-[70px] md:pt-[100px] gap-12 justify-start items-start md:items-center">
+        <h2 className="text-white text-6xl font-bold hidden md:block">Movies</h2>
+        <div className="w-[200px] top-10">
           <FormControl
             size="small"
             fullWidth
@@ -87,7 +87,7 @@ const Home = () => {
               value={selectedGenre}
               label="Genre"
               onChange={handleChange}
-              style={{ color: "white", borderColor: "white", outline: "none" }}
+              style={{ color: "white", borderColor: "white", outline: "none",height: "2rem" }}
               IconComponent={(props) => (
                 <ExpandMoreIcon {...props} style={{ color: "white" }} />
               )}
@@ -118,10 +118,10 @@ const Home = () => {
         <MovieList title="Hollywood Movies" data={HollywoodMovies} />
         <MovieList title="Romantic Movies" data={romance} />
       </div>
-      <div className={`w-full h-auto pt-[220px] px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
-        <div className="grid grid-cols-4 gap-6 w-auto overflow-hidden px-10 pb-[220px]">
+          <div className={`w-full h-auto pt-[150px] md:pt-[220px] px-4 md:px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-auto overflow-hidden px-4 sm:px-10 pb-[220px]">
           {filterMovies?.map((movie: MovieInterface) => (
-            <MovieCard key={movie.id} data={movie} />
+            <MovieCard2 key={movie.id} data={movie} />
           ))}
         </div>
       </div>

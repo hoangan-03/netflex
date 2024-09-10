@@ -1,4 +1,33 @@
+// Define the User type
+export interface User {
+  id: string;
+  fullname: string;
+  imageUrl?: string;
+  isMale?: boolean;
+  yearOfBirth?: number;
+  email: string;
+  hashedPassword: string;
+  createdAt: Date;
+  updatedAt: Date;
+  wishList: UserMovie[];
+}
 
+// Define the Movie type
+export interface Movie {
+  id: string;
+  videoID: string;
+  videoUrl: string;
+  users: UserMovie[];
+}
+
+// Define the UserMovie type
+export interface UserMovie {
+  id: string;
+  userId: string;
+  movieId: string;
+  user: User;
+  movie: Movie;
+}
 export interface MovieInterface {
   id: string;
   videoUrl: string;

@@ -17,7 +17,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import MovieCard2 from "@/components/MovieCard2";
 import { update } from "lodash";
 
-const Home = () => {
+const Films = () => {
   const [selectedGenre, setGenre] = useState<string>("Genre");
   const { data: movies = [] } = useMovieList();
   const [updatedMovies, setUpdatedMovies] = useState(movies);
@@ -134,4 +134,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Films;

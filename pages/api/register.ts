@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { fullname, email, password } = req.body;
+    const { fullname, email, password, isMale, yearOfBirth, imageUrl, wishList } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
@@ -16,11 +16,22 @@ export default async function handler(
           fullname,
           email,
           hashedPassword,
+          isMale,
+          yearOfBirth,
+          imageUrl,
+          wishList: {
+            create: wishList.map((movie: { movieId: string }) => ({
+              movie: {
+                connect: { id: movie.movieId },
+              },
+            })),
+          },
         },
       });
       res.status(201).json(newUser);
     } catch (error) {
-      res.status(500).json({ error: "User already exists" });
+      console.error(error);
+      res.status(500).json({ error: "User already exists or invalid data" });
     }
   } else {
     res.status(405).json({ message: "Method not allowed" });

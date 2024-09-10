@@ -41,8 +41,7 @@ const DisplayRandom = ({ data }: MovieListProps) => {
   const thumbnailUrl =
     data[randomIndex]?.backdrop_path
       ? "https://image.tmdb.org/t/p/original" + data[randomIndex]?.backdrop_path
-      : "/default-thumbnail.jpg"; // Fallback image in case backdrop_path is undefined
-
+      : "default.jpg";
   return (
     <div className="relative h-[90vw] md:h-[56.25vw] mb-8 w-full">
       <img

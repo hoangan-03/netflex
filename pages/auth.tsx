@@ -1,31 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useState } from 'react';
-import axios from 'axios';
-import CustomModal from '@/components/CustomModal';
+import React, { useState } from "react";
+import axios from "axios";
+import CustomModal from "@/components/CustomModal";
+import { useRouter } from "next/router";
+import { UserMovie } from "@/types";
 
 const Auth = () => {
+  const router = useRouter();
   const [openModal, setOpenModal] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
   const handleCloseModal = () => {
     setOpenModal(false);
   };
   const [isLoginView, setIsLoginView] = useState(true);
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-    fullname: '',
+    email: "",
+    password: "",
+    fullname: "",
   });
   const [errors, setErrors] = useState({
-    email: '',
-    password: '',
-    fullname: '',
+    email: "",
+    password: "",
+    fullname: "",
   });
 
   const toggleView = () => {
     setIsLoginView(!isLoginView);
-    setFormData({ email: '', password: '', fullname: '' });
-    setErrors({ email: '', password: '', fullname: '' });
+    setFormData({ email: "", password: "", fullname: "" });
+    setErrors({ email: "", password: "", fullname: "" });
   };
 
   const handleChange = (e: any) => {
@@ -35,24 +38,24 @@ const Auth = () => {
 
   const validate = () => {
     let valid = true;
-    let newErrors = { email: '', password: '', fullname: '' };
+    let newErrors = { email: "", password: "", fullname: "" };
     if (!formData.email) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
       valid = false;
     } else if (!/^\S+@\S+$/i.test(formData.email)) {
-      newErrors.email = 'Invalid email format';
+      newErrors.email = "Invalid email format";
       valid = false;
     }
     if (!formData.password) {
-      newErrors.password = 'Password is required';
+      newErrors.password = "Password is required";
       valid = false;
     } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters';
+      newErrors.password = "Password must be at least 6 characters";
       valid = false;
     }
 
     if (!isLoginView && !formData.fullname) {
-      newErrors.fullname = 'Full name is required';
+      newErrors.fullname = "Full name is required";
       valid = false;
     }
 
@@ -61,41 +64,60 @@ const Auth = () => {
   };
 
   const handleSubmit = async (e: any) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
     if (validate()) {
       try {
+        let response;
         if (isLoginView) {
-          const response = await axios.post('/api/login', {
+          response = await axios.post("/api/login", {
             email: formData.email,
             password: formData.password,
           });
           setIsSuccess(true);
-          setModalMessage('Login successful');
-          setOpenModal(true);
+          setModalMessage("Login successful");
+          const user = response.data.user;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({ email: formData.email, userId: user.id })
+          );
         } else {
-          const response = await axios.post('/api/register', {
+          response = await axios.post("/api/register", {
             fullname: formData.fullname,
             email: formData.email,
             password: formData.password,
+            isMale: null,
+            yearOfBirth: null,
+            imageUrl: null,
+            wishList: [] as UserMovie[],
           });
           setIsSuccess(true);
-          setModalMessage('Registration successful');
-          setOpenModal(true);
+          setModalMessage("Registration successful");
+          const user = response.data.user;
+          localStorage.setItem(
+            "user",
+            JSON.stringify({
+              fullname: formData.fullname,
+              email: formData.email,
+              userId: user.id,
+            })
+          );
         }
+        setOpenModal(true);
+        router.push("/");
       } catch (error: any) {
         setIsSuccess(false);
         if (error.response) {
           if (error.response.status === 401) {
-            setErrors({ ...errors, email: 'Invalid email or password' });
-            setModalMessage('Invalid email or password');
+            setErrors({ ...errors, email: "Invalid email or password" });
+            setModalMessage("Invalid email or password");
           } else if (error.response.status === 500) {
-            setErrors({ ...errors, email: 'User already exists' });
-            setModalMessage('User already exists');
+            setErrors({ ...errors, email: "User already exists" });
+            setModalMessage("User already exists");
           } else {
-            setModalMessage('An error occurred');
+            setModalMessage("An error occurred");
           }
         } else {
-          setModalMessage('An error occurred');
+          setModalMessage("An error occurred");
         }
         setOpenModal(true);
       }
@@ -104,11 +126,19 @@ const Auth = () => {
 
   return (
     <section className="h-screen w-screen flex flex-row gap-4 items-center justify-center shadow-xl bg-gray-100 p-4">
-      <CustomModal open={openModal} isSuccess={isSuccess} action="Đăng kí tài khoản" onClose={handleCloseModal} errorMes={modalMessage} />
+      <CustomModal
+        open={openModal}
+        isSuccess={isSuccess}
+        action="Đăng kí tài khoản"
+        onClose={handleCloseModal}
+        errorMes={modalMessage}
+      />
       <div className="w-[70%] h-full bg-black rounded-3xl">
         <div className="absolute flex flex-row gap-2 items-center right-5 top-5">
           <h2 className="text-base font-normal text-black w-[80%] text-center">
-            {isLoginView ? "Don't have an account?" : "Already have an account?"}
+            {isLoginView
+              ? "Don't have an account?"
+              : "Already have an account?"}
           </h2>
           <button
             onClick={toggleView}
@@ -128,7 +158,7 @@ const Auth = () => {
           {isLoginView ? "Sign in to " : "Sign up to"}
           <span className="text-rose-700"> Netflex</span>
         </h2>
-  
+
         <h2 className="text-base text-black font-normal w-[80%] text-center mb-6">
           {isLoginView
             ? "Enjoy your time experiencing the app"
@@ -137,7 +167,10 @@ const Auth = () => {
         <form className="w-full">
           {!isLoginView && (
             <div className="mb-2">
-              <label htmlFor="register-fullname" className="block font-bold text-gray-700 mb-2">
+              <label
+                htmlFor="register-fullname"
+                className="block font-bold text-gray-700 mb-2"
+              >
                 Full name
               </label>
               <input
@@ -156,7 +189,10 @@ const Auth = () => {
             </div>
           )}
           <div className="mb-2">
-            <label htmlFor="email" className="block font-bold text-gray-700 mb-2">
+            <label
+              htmlFor="email"
+              className="block font-bold text-gray-700 mb-2"
+            >
               Email
             </label>
             <input
@@ -174,7 +210,10 @@ const Auth = () => {
             )}
           </div>
           <div className="mb-6">
-            <label htmlFor="password" className="block font-bold text-gray-700 mb-2">
+            <label
+              htmlFor="password"
+              className="block font-bold text-gray-700 mb-2"
+            >
               Password
             </label>
             <input
@@ -193,14 +232,14 @@ const Auth = () => {
           </div>
           <button
             onClick={handleSubmit}
-            className="w-full bg-sky-700 text-white px-4 py-2 font-bold rounded-xl">
-            {isLoginView ? 'Login' : 'Register'}
+            className="w-full bg-sky-700 text-white px-4 py-2 font-bold rounded-xl"
+          >
+            {isLoginView ? "Login" : "Register"}
           </button>
         </form>
       </div>
     </section>
   );
-  
 };
 
 export default Auth;

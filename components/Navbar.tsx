@@ -23,6 +23,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<{ fullname: string, userId: string } | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // New loading state
   const searchFormRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -41,32 +42,37 @@ const Navbar = () => {
     };
   }, []);
 
-
- useEffect(() => {
-  const user = localStorage.getItem("user");
-  if (user) {
-    const parsedUser = JSON.parse(user);
-    const userId = parsedUser.userId;
-    if (userId) {
-      axios.get(`/api/user?id=${userId}`)
-        .then(response => {
-          setIsLoggedIn(true);
-          setUser(response.data);
-        })
-        .catch(error => {
-          console.error("Error fetching user data:", error);
-          setIsLoggedIn(false);
-          setUser(null);
-        });
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      const userId = parsedUser.userId;
+      if (userId) {
+        axios.get(`/api/user?id=${userId}`)
+          .then(response => {
+            setIsLoggedIn(true);
+            setUser(response.data);
+          })
+          .catch(error => {
+            console.error("Error fetching user data:", error);
+            setIsLoggedIn(false);
+            setUser(null);
+          })
+          .finally(() => {
+            setIsLoading(false); 
+          });
+      } else {
+        setIsLoggedIn(false);
+        setUser(null);
+        setIsLoading(false); 
+      }
     } else {
       setIsLoggedIn(false);
       setUser(null);
+      setIsLoading(false); 
     }
-  } else {
-    setIsLoggedIn(false);
-    setUser(null);
-  }
-}, []);
+  }, []);
+
   const toggleMobileMenu = useCallback(() => {
     setShowMobileMenu((current) => !current);
   }, []);
@@ -123,8 +129,8 @@ const Navbar = () => {
   return (
     <nav className="w-full fixed z-[10001]">
       <div
-        className={`px-4 md:px-16 py-6 flex flex-row items-center transition duration-500 ${
-          showBackground ? "bg-zinc-900 bg-opacity-90" : ""
+        className={`px-4 md:px-16 py-3 flex flex-row items-center transition duration-500 ${
+          showBackground ? "bg-zinc-900 bg-opacity-90" : "bg-black/20 backdrop-blur-lg"
         }`}
       >
         <Image
@@ -151,12 +157,6 @@ const Navbar = () => {
               active={router.pathname === "/random"}
             />
           </Link>
-          <Link href="/wishlist">
-            <NavbarItem
-              label="Wishlist"
-              active={router.pathname === "/wishlist"}
-            />
-          </Link>
         </div>
         <div
           onClick={toggleMobileMenu}
@@ -170,7 +170,7 @@ const Navbar = () => {
           />
           <MobileMenu visible={showMobileMenu} />
         </div>
-        <div className="flex flex-row ml-auto gap-3 items-center">
+        <div className="flex flex-row ml-auto gap-4 items-center">
           <div
             className="text-gray-200 hover:text-gray-300 cursor-pointer transition duration-500"
             onClick={toggleSearch}
@@ -195,8 +195,16 @@ const Navbar = () => {
           <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition mr-3">
             <BellIcon className="w-6" />
           </div>
-          {isLoggedIn ? (
-            <div className="relative">
+          {isLoading ? (
+            <div className="text-white"></div>
+          ) : isLoggedIn ? (
+            <div className="relative flex flex-row gap-6 items-center">
+              <Link href="/wishlist">
+                <NavbarItem
+                  label="Wishlist"
+                  active={router.pathname === "/wishlist"}
+                />
+              </Link>
               <div className="cursor-pointer" onClick={handleAvatarClick}>
                 <Image
                   src={avatar}
@@ -207,12 +215,12 @@ const Navbar = () => {
                 />
               </div>
               {showDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg z-50">
+                <div className="absolute right-0 top-10 w-48 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg z-50">
                   <div className="px-4 py-2 font-bold text-white">
                     {user?.fullname}
                   </div>
                   <div
-                    className="px-4 py-2 text-black bg-gray-200  cursor-pointer rounded-b-xl hover:bg-gray-800 hover:text-gray-200"
+                    className="px-4 py-2 text-black bg-gray-200 cursor-pointer rounded-b-xl hover:bg-gray-800 hover:text-gray-200"
                     onClick={handleLogout}
                   >
                     Logout

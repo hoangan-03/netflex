@@ -129,7 +129,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
                   </p>
                 </div>
                 <p className="text-white text-lg w-auto mb-7">
-                  {signleInfo?.vote_average.toFixed(1)} {"/10"}
+                  {signleInfo?.vote_average.toFixed(1)}{"/10"}
                 </p>
                 <p className="text-white text-base">{signleInfo?.overview}</p>
               </div>

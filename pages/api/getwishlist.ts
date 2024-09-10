@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prismadb from "@/lib/prismadb";
+import { ObjectId } from 'mongodb';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === 'GET') {
@@ -10,8 +11,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
+      // Convert userId to ObjectId and then to string
+      const userObjectId = new ObjectId(String(userId));
+      const userObjectIdStr = userObjectId.toString();
+
       const wishlist = await prismadb.userMovie.findMany({
-        where: { userId: String(userId) },
+        where: { userId: userObjectIdStr },
         include: {
           movie: true,
         },

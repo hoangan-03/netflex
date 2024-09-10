@@ -123,8 +123,8 @@ const Films = () => {
         <MovieList title="Hollywood Movies" data={HollywoodMovies} />
         <MovieList title="Romantic Movies" data={romance} />
       </div>
-          <div className={`w-full h-auto pt-[150px] md:pt-[220px] px-4 md:px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-auto overflow-hidden px-4 sm:px-10 pb-[220px]">
+          <div className={`w-full h-auto pt-[150px] md:pt-[220px] px-4 md:px-6 xl:px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
+        <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-auto overflow-hidden px-4 sm:px-10 pb-[220px]">
           {filterMovies?.map((movie: MovieInterface) => (
             <MovieCard2 key={movie.id} data={movie} />
           ))}

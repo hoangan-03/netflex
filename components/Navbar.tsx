@@ -44,8 +44,6 @@ const Navbar = () => {
 
  useEffect(() => {
   const user = localStorage.getItem("user");
-  console.log("User local storage:", user);
-
   if (user) {
     const parsedUser = JSON.parse(user);
     const userId = parsedUser.userId;

@@ -17,7 +17,6 @@ const WishList = () => {
         const fetchWishlist = async () => {
             try {
                 const user = localStorage.getItem("user");
-                console.log("User local storage:", user);
                 let userId;
                 if (user) {
                   const parsedUser = JSON.parse(user);
@@ -56,5 +55,4 @@ const WishList = () => {
         </>
     );
 };
-
 export default WishList;

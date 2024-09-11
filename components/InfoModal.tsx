@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { PlusIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import React, { useCallback, useEffect, useState } from "react";
+import { PlusIcon, XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
 import PlayButton from "@/components/PlayButton";
 import useInfoModalStore from "@/hooks/useInfoStore";
 import { fetchCast } from "@/api/film";
@@ -11,6 +11,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
   const { signleInfo } = useInfoModalStore();
   const [user, setUser] = useState<any>(null);
+  const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
 
   useEffect(() => {
     setIsVisible(!!visible);
@@ -30,11 +31,20 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
       try {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
+        axios.get(`/api/getwishlist?userId=${parsedUser.userId}`)
+          .then(response => {
+            const wishlist = response.data;
+            const isInWishlist = wishlist.some((movie: any) => movie.videoID === String(signleInfo?.id));
+            setIsInWishlist(isInWishlist);
+          })
+          .catch(error => {
+            console.error("Error fetching wishlist:", error);
+          });
       } catch (error) {
         console.error("Failed to parse user from local storage:", error);
       }
     }
-  }, []);
+  }, [signleInfo]);
 
   const handleClose = useCallback(() => {
     setIsVisible(false);
@@ -56,10 +66,32 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
           userId,
           movieId,
         });
-        alert('Movie added to wishlist');
+        setIsInWishlist(true);
       } catch (error) {
         console.error('Error adding movie to wishlist:', error);
-        alert('Failed to add movie to wishlist');
+      }
+    } else {
+      alert('User not found');
+    }
+  };
+  const handleRemoveFromWishlist = async () => {
+    if (user) {
+      const userId = user.userId;
+      const movieId = signleInfo?.id;
+      if (!userId || !movieId) {
+        alert('User ID or Movie ID is missing');
+        return;
+      }
+      try {
+        await axios.delete('/api/removefromwishlist', {
+          params: {
+            userId,
+            movieId,
+          },
+        });
+        setIsInWishlist(false);
+      } catch (error) {
+        console.error('Error removing movie from wishlist:', error);
       }
     } else {
       alert('User not found');
@@ -69,7 +101,6 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   if (!visible) {
     return null;
   }
-  console.log(signleInfo)
 
   const thumbnailUrl =
     "https://image.tmdb.org/t/p/original" + signleInfo?.backdrop_path;
@@ -107,10 +138,14 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
             {user && (
               <div className="absolute bottom-[10%] right-10">
                 <button
-                  onClick={handleAddToWishlist}
+                  onClick={isInWishlist ? handleRemoveFromWishlist : handleAddToWishlist}
                   className="flex flex-row gap-4 justify-center bg-white/10 rounded-full hover:bg-white/30 p-2 backdrop-blur-sm items-center"
                 >
-                  <PlusIcon className="w-7 h-7" />
+                  {isInWishlist ? (
+                    <CheckIcon className="w-7 h-7" />
+                  ) : (
+                    <PlusIcon className="w-7 h-7" />
+                  )}
                 </button>
               </div>
             )}

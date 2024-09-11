@@ -63,7 +63,7 @@ const Auth = () => {
     return valid;
   };
 
-  const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (validate()) {
       try {
@@ -103,7 +103,9 @@ const Auth = () => {
           );
         }
         setOpenModal(true);
-        router.push("/");
+        setTimeout(() => {
+          router.push("/");
+        }, 2000);
       } catch (error: any) {
         setIsSuccess(false);
         if (error.response) {
@@ -111,8 +113,8 @@ const Auth = () => {
             setErrors({ ...errors, email: "Invalid email or password" });
             setModalMessage("Invalid email or password");
           } else if (error.response.status === 500) {
-            setErrors({ ...errors, email: "User already exists" });
-            setModalMessage("User already exists");
+            setErrors({ ...errors, email: "Email already exists" });
+            setModalMessage("Email already exists");
           } else {
             setModalMessage("An error occurred");
           }
@@ -123,13 +125,12 @@ const Auth = () => {
       }
     }
   };
-
   return (
     <section className="h-screen w-screen flex flex-row gap-4 items-center justify-center shadow-xl bg-gray-100 p-4">
       <CustomModal
         open={openModal}
         isSuccess={isSuccess}
-        action="Đăng kí tài khoản"
+        action= {isLoginView ? "Login" : "Register"}
         onClose={handleCloseModal}
         errorMes={modalMessage}
       />

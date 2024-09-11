@@ -6,7 +6,7 @@ import { PlayIcon } from "@heroicons/react/24/solid";
 import useInfoModalStore from "../hooks/useInfoStore";
 import { MovieCardProps } from "../types";
 
-const MovieCard2= ({ data }: MovieCardProps) => {
+const MovieCardResponsive = ({ data }: MovieCardProps) => {
   const router = useRouter();
   const { openModal } = useInfoModalStore();
 
@@ -80,4 +80,4 @@ const MovieCard2= ({ data }: MovieCardProps) => {
   );
 };
 
-export default MovieCard2;
+export default MovieCardResponsive;

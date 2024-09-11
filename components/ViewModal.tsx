@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import useViewStore from "@/hooks/useViewStore";
-import MovieCard from "./MovieCard2";
+import MovieCard from "./MovieCardResponsive";
 import { ViewModalProps } from "@/types";
 
 const InfoModal = ({ visible, onClose }: ViewModalProps) => {

@@ -1,11 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
 import tick from "@/assets/picture/accept.png";
 import info from "@/assets/picture/info.png";
 import close from "@/assets/picture/close.png";
 import Modal from "@mui/material/Modal";
 import Image from "next/image";
-import logo from "@/assets/picture/netflexx.png";
+
 const CustomModal = ({ open, isSuccess, action, onClose, errorMes }) => {
   return (
     <div className="z-[1900001]">
@@ -39,7 +39,7 @@ const CustomModal = ({ open, isSuccess, action, onClose, errorMes }) => {
                 <h2
                   className={`  w-auto text-start items-start text-xl lg:text-2xl  font-bold text-black`}
                 >
-                  {action} {isSuccess ? `thành công` : `thất bại`}
+                  {action} {isSuccess ? `successfully` : `failed`}
                 </h2>
                 <h1
                   className={`w-auto text-start items-start text-base font-semibold text-gray-700`}

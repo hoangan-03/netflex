@@ -4,7 +4,7 @@ import InfoModal from "@/components/InfoModal";
 import ViewModal from "@/components/ViewModal";
 import useInfoModalStore from "@/hooks/useInfoStore";
 import useViewStore from "@/hooks/useViewStore";
-import MovieCard2 from "@/components/MovieCard2";
+import MovieCardResponsive from "@/components/MovieCardResponsive";
 import { fetchMovie } from "../api/film";
 import axios from 'axios';
 import { MovieInterface } from "../types";
@@ -39,16 +39,15 @@ const WishList = () => {
         };
         fetchWishlist();
     }, []);
-    console.log(movies);
     return (
         <>
             <InfoModal visible={isOpen} onClose={closeModal} />
             <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
             <Navbar />
-            <div className={`w-full h-auto pt-[150px] md:pt-[220px] px-4 md:px-[100px] flex flex-col gap-2 `}>
+            <div className={`w-full h-auto pt-[100px] md:pt-[120px] px-4 md:px-[100px] flex flex-col gap-2 `}>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-auto overflow-hidden px-4 sm:px-10 pb-[220px]">
                     {movies?.map((movie: MovieInterface) => (
-                        <MovieCard2 key={movie.id} data={movie} />
+                        <MovieCardResponsive key={movie.id} data={movie} />
                     ))}
                 </div>
             </div>

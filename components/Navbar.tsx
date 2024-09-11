@@ -215,7 +215,7 @@ const Navbar = () => {
                 />
               </div>
               {showDropdown && (
-                <div className="absolute right-0 top-10 w-48 bg-black/20 backdrop-blur-lg rounded-xl shadow-lg z-50">
+                <div className="absolute right-0 top-10 w-48 bg-black/60 backdrop-blur-lg rounded-xl shadow-lg z-[15000]">
                   <div className="px-4 py-2 font-bold text-white">
                     {user?.fullname}
                   </div>

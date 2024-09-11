@@ -4,7 +4,7 @@ import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import PlayButton from "@/components/PlayButton";
 import useInfoModalStore from "@/hooks/useInfoStore";
 import { MovieListProps } from "@/types";
-import Image from 'next/image';
+
 
 const DisplayRandom = ({ data }: MovieListProps) => {
   const { openModal } = useInfoModalStore();
@@ -18,18 +18,18 @@ const DisplayRandom = ({ data }: MovieListProps) => {
   useEffect(() => {
     const handleResize = () => {
       const overview = data[randomIndex]?.overview || "";
-      let limit = 200; // Default limit for small screens
+      let limit = 200; 
       if (window.innerWidth >= 1280) {
-        limit = 500; // xl screens
+        limit = 500; 
       } else if (window.innerWidth >= 1024) {
-        limit = 400; // lg screens
+        limit = 400; 
       }
       setTruncatedOverview(
         overview.length > limit ? `${overview.slice(0, limit)}...` : overview
       );
     };
 
-    handleResize(); // Call initially to set the correct limit
+    handleResize(); 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, [data, randomIndex]);

@@ -14,8 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MovieCard2 from "@/components/MovieCard2";
-import { update } from "lodash";
+import MovieCardResponsive from "@/components/MovieCardResponsive";
 
 const Films = () => {
   const [selectedGenre, setGenre] = useState<string>("Genre");
@@ -126,7 +125,7 @@ const Films = () => {
           <div className={`w-full h-auto pt-[150px] md:pt-[220px] px-4 md:px-6 xl:px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-auto overflow-hidden px-4 sm:px-10 pb-[220px]">
           {filterMovies?.map((movie: MovieInterface) => (
-            <MovieCard2 key={movie.id} data={movie} />
+            <MovieCardResponsive key={movie.id} data={movie} />
           ))}
         </div>
       </div>

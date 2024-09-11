@@ -11,7 +11,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     try {
-      // Convert userId to ObjectId and then to string
       const userObjectId = new ObjectId(String(userId));
       const userObjectIdStr = userObjectId.toString();
 

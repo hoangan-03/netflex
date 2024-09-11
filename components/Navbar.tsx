@@ -157,6 +157,12 @@ const Navbar = () => {
               active={router.pathname === "/random"}
             />
           </Link>
+          <Link href="/series">
+            <NavbarItem
+              label="Series"
+              active={router.pathname === "/series"}
+            />
+          </Link>
         </div>
         <div
           onClick={toggleMobileMenu}

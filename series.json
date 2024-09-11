@@ -1,0 +1,20 @@
+[
+    {
+        "seriesID": "1062807",
+        "seasons": [
+            {
+                "seasonID": "1",
+                "episodes": [
+                    {
+                        "episodeID": "1",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "2",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    }
+                ]
+            }
+        ]
+    }
+]

@@ -1,4 +1,5 @@
-// Define the User type
+
+
 export interface User {
   id: string;
   fullname: string;
@@ -12,7 +13,6 @@ export interface User {
   wishList: UserMovie[];
 }
 
-// Define the Movie type
 export interface Movie {
   id: string;
   videoID: string;
@@ -20,7 +20,6 @@ export interface Movie {
   users: UserMovie[];
 }
 
-// Define the UserMovie type
 export interface UserMovie {
   id: string;
   userId: string;
@@ -28,6 +27,60 @@ export interface UserMovie {
   user: User;
   movie: Movie;
 }
+
+export interface SeriesInterface {
+  backdrop_path: string;
+  episode_run_time: number[];
+  first_air_date: string;
+  genres: Genre[];
+  homepage: string;
+  id: number;
+  languages: string[];
+  name: string;
+  number_of_episodes: number;
+  number_of_seasons: number;
+  origin_country: string[];
+  original_language: string;
+  original_name: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  seasons: Season[];
+  status: string;
+  tagline: string;
+  type: string;
+  vote_average: number;
+  vote_count: number;
+}
+
+export interface Episode {
+  id: number;
+  name: string;
+  overview: string;
+  vote_average: number;
+  vote_count: number;
+  air_date: string;
+  episode_number: number;
+  episode_type: string;
+  production_code: string;
+  runtime: number;
+  season_number: number;
+  show_id: number;
+  still_path: string;
+}
+
+export interface Season {
+  air_date: string;
+  episode_count: number;
+  id: number;
+  name: string;
+  overview: string;
+  poster_path: string;
+  season_number: number;
+  vote_average: number;
+}
+
+
 export interface MovieInterface {
   id: string;
   videoUrl: string;
@@ -48,6 +101,7 @@ export interface MovieInterface {
   tagline: string;
 
 }
+export type MediaInterface = MovieInterface | SeriesInterface;
 export interface Genre {
   id: number;
   name: string;
@@ -74,6 +128,10 @@ export interface InfoModalProps {
   visible?: boolean;
   onClose: any;
 }
+export interface SeriesInfoModalProps {
+  visible?: boolean;
+  onClose: any;
+}
 export interface MobileMenuProps {
   visible?: boolean;
 }
@@ -81,6 +139,11 @@ export interface MovieListProps {
   data: MovieInterface[];
   title: string;
 }
+export interface SeriesListProps {
+  data: MovieInterface[];
+  title: string;
+}
+
 import { StaticImageData } from "next/image";
 export interface ScrollButtonProps {
   direction: "left" | "right";
@@ -97,6 +160,10 @@ export interface PlayButtonProps {
 export interface MovieCardProps {
   data: MovieInterface;
 }
+export interface SeriesCardProps {
+  data: SeriesInterface;
+}
+
 export interface ViewModalProps {
   visible?: boolean;
   onClose: any;

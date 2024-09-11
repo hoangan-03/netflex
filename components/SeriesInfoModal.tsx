@@ -1,15 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { PlusIcon, XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
 import PlayButton from "@/components/PlayButton";
-import useInfoModalStore from "@/hooks/useInfoStore";
+import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";
 import { fetchCast } from "@/api/film";
-import { InfoModalProps } from "@/types";
+import { SeriesInfoModalProps } from "@/types";
 import axios from 'axios';
 
-const InfoModal = ({ visible, onClose }: InfoModalProps) => {
+const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
   const [castData, setCast] = useState<any>(null);
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
-  const { signleInfo } = useInfoModalStore();
+  const { seriesInfo} = useSeriesInfoStore();
   const [user, setUser] = useState<any>(null);
   const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
 
@@ -18,12 +18,12 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   }, [visible]);
 
   useEffect(() => {
-    if (signleInfo?.id) {
-      fetchCast(signleInfo?.id)
+    if (seriesInfo?.id) {
+      fetchCast(String(seriesInfo?.id))
         .then((data) => setCast(data))
         .catch((error) => console.error(error));
     }
-  }, [signleInfo]);
+  }, [seriesInfo]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -34,7 +34,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
         axios.get(`/api/getwishlist?userId=${parsedUser.userId}`)
           .then(response => {
             const wishlist = response.data;
-            const isInWishlist = wishlist.some((movie: any) => movie.videoID === String(signleInfo?.id));
+            const isInWishlist = wishlist.some((movie: any) => movie.videoID === String(seriesInfo?.id));
             setIsInWishlist(isInWishlist);
           })
           .catch(error => {
@@ -44,7 +44,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
         console.error("Failed to parse user from local storage:", error);
       }
     }
-  }, [signleInfo]);
+  }, [seriesInfo]);
 
   const handleClose = useCallback(() => {
     setIsVisible(false);
@@ -56,7 +56,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   const handleAddToWishlist = async () => {
     if (user) {
       const userId = user.userId;
-      const movieId = signleInfo?.id;
+      const movieId = seriesInfo?.id;
       if (!userId || !movieId) {
         alert('User ID or Movie ID is missing');
         return;
@@ -77,7 +77,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   const handleRemoveFromWishlist = async () => {
     if (user) {
       const userId = user.userId;
-      const movieId = signleInfo?.id;
+      const movieId = seriesInfo?.id;
       if (!userId || !movieId) {
         alert('User ID or Movie ID is missing');
         return;
@@ -101,9 +101,10 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   if (!visible) {
     return null;
   }
+  console.log("signleInfo", seriesInfo);
 
   const thumbnailUrl =
-    "https://image.tmdb.org/t/p/original" + signleInfo?.backdrop_path;
+    "https://image.tmdb.org/t/p/original" + seriesInfo?.backdrop_path;
 
   return (
     <div className="z-[65000] transition  w-auto duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
@@ -118,7 +119,6 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
               autoPlay
               muted
               loop
-              src={signleInfo?.videoUrl}
               className="w-full brightness-[60%] object-cover h-full"
             />
             <div
@@ -129,10 +129,10 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
             </div>
             <div className="absolute bottom-[10%] left-10">
               <p className="text-white text-3xl md:text-4xl h-full lg:text-5xl font-bold mb-8">
-                {signleInfo?.title}
+                {seriesInfo?.name}
               </p>
               <div className="flex flex-row gap-4 items-center">
-                <PlayButton movieId={signleInfo?.id} />
+                <PlayButton movieId={seriesInfo?.id} />
               </div>
             </div>
             {user && (
@@ -155,18 +155,16 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
               <div className="flex flex-col w-[70%] h-full">
                 <div className="flex flex-row items-center gap-3">
                   <p className="text-lg text-green-400 ">
-                    {signleInfo?.release_date?.substring(0, 4)}
+                    {seriesInfo?.number_of_seasons} Seasons {"   "}
                   </p>
                   <p className="text-gray-300 text-lg">
-                    {signleInfo?.runtime &&
-                      `${Math.floor(signleInfo.runtime / 60)}h ${signleInfo.runtime % 60
-                      }m`}
+                {seriesInfo?.number_of_episodes} Episodes
                   </p>
                 </div>
                 <p className="text-white text-lg w-auto mb-7">
-                  {signleInfo?.vote_average.toFixed(1)}{"/10"}
+                  {seriesInfo?.vote_average.toFixed(1)}{"/10"}
                 </p>
-                <p className="text-white text-base">{signleInfo?.overview}</p>
+                <p className="text-white text-base">{seriesInfo?.overview}</p>
               </div>
               <div className="w-[30%] h-full flex flex-col gap-3 justify-start items-start">
                 <div className="text-white  text-base">
@@ -176,18 +174,18 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
                 </div>
                 <div className="text-white  text-base">
                   <span className="text-gray-200 font-bold">Genre: </span>
-                  {signleInfo?.genres &&
-                    signleInfo?.genres.length > 0 &&
-                    (signleInfo?.genres[0] as { name: string })?.name}
-                  {signleInfo?.genres &&
-                    signleInfo?.genres.length > 1 &&
-                    `, ${(signleInfo?.genres[1] as { name: string })?.name}`}
-                  {signleInfo?.genres &&
-                    signleInfo?.genres.length > 2 &&
-                    `, ${(signleInfo?.genres[2] as { name: string })?.name}`}
-                  {signleInfo?.genres &&
-                    signleInfo?.genres.length > 3 &&
-                    `, ${(signleInfo?.genres[3] as { name: string })?.name}`}
+                  {seriesInfo?.genres &&
+                    seriesInfo?.genres.length > 0 &&
+                    (seriesInfo?.genres[0] as { name: string })?.name}
+                  {seriesInfo?.genres &&
+                    seriesInfo?.genres.length > 1 &&
+                    `, ${(seriesInfo?.genres[1] as { name: string })?.name}`}
+                  {seriesInfo?.genres &&
+                    seriesInfo?.genres.length > 2 &&
+                    `, ${(seriesInfo?.genres[2] as { name: string })?.name}`}
+                  {seriesInfo?.genres &&
+                    seriesInfo?.genres.length > 3 &&
+                    `, ${(seriesInfo?.genres[3] as { name: string })?.name}`}
                 </div>
               </div>
             </div>
@@ -198,4 +196,4 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   );
 };
 
-export default InfoModal;
+export default SeriesInfoModal;

@@ -1,8 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useState } from "react";
-import { PlusIcon, XMarkIcon, CheckIcon, PlayIcon } from "@heroicons/react/24/outline";
+import {
+  PlusIcon,
+  XMarkIcon,
+  CheckIcon,
+  PlayIcon,
+} from "@heroicons/react/24/outline";
 import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";
-import {fetchSeason, fetchSeries,fetchSeriesCast } from "@/api/film";
+import { fetchSeason, fetchSeries, fetchSeriesCast } from "@/api/film";
 import { SeriesInfoModalProps } from "@/types";
 import axios from "axios";
 import { useRouter } from "next/router";
@@ -24,7 +29,10 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
   const handleFetchEpisodes = async (seasonNumber: number) => {
     if (seriesInfo?.id) {
       try {
-        const episodesData = await fetchSeason(String(seriesInfo?.id), seasonNumber);
+        const episodesData = await fetchSeason(
+          String(seriesInfo?.id),
+          seasonNumber
+        );
         setEpisodes(episodesData.episodes);
       } catch (error) {
         console.error("Error fetching episodes:", error);
@@ -265,38 +273,51 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                 </select>
               </div>
               <div className="flex flex-col gap-4 w-full">
-                {episodes.map((episode, index) => (
-                  <div
-                    key={index}
-                    className="flex flex-row gap-4 pr-2 w-full hover:bg-zinc-800 cursor-pointer"
-                    onClick={() =>
-                      router.push(
-                        `/watch/series/${
-                          seriesInfo?.id
-                        }/season/${selectedSeason}/episode/${index + 1}`
-                      )
-                    }
-                  >
+                {episodes.map((episode, index) => {
+                  const isComingSoon = !episode.overview || !episode.still_path;
+                  return (
                     <div
-                      className="w-[300px] relative"
-                      style={{ aspectRatio: "16/9" }}
+                      key={index}
+                      className={`flex flex-row gap-4 pr-2 w-full ${
+                        isComingSoon
+                          ? "cursor-not-allowed"
+                          : "cursor-pointer hover:bg-zinc-800"
+                      }`}
+                      onClick={() => {
+                        if (!isComingSoon) {
+                          router.push(
+                            `/watch/series/${
+                              seriesInfo?.id
+                            }/season/${selectedSeason}/episode/${index + 1}`
+                          );
+                        }
+                      }}
                     >
-                      <img
-                        src={`https://image.tmdb.org/t/p/original${episode.still_path}`}
-                        alt={episode.name}
-                        className="object-cover rounded-sm"
-                      />
+                      <div
+                        className="w-[300px] relative"
+                        style={{ aspectRatio: "16/9" }}
+                      >
+                        <img
+                          src={
+                            episode.still_path
+                              ? `https://image.tmdb.org/t/p/original${episode.still_path}`
+                              : "https://img.freepik.com/free-vector/neon-style-coming-soon-glowing-background-design_1017-25516.jpg?w=1380&t=st=1726153373~exp=1726153973~hmac=585cf6938ffde08fabff27e4f1b2ad3e14d264d6b99886d9e8cc1d2871f5d7e5"
+                          }
+                          alt={episode.name}
+                          className="object-cover rounded-sm"
+                        />
+                      </div>
+                      <div className="flex flex-col gap-1 w-[70%] p-2">
+                        <p className="text-white text-lg font-bold">
+                          {episode.name}
+                        </p>
+                        <p className="text-gray-300 text-base">
+                          {isComingSoon ? "Coming soon" : episode.overview}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex flex-col gap-1 w-[70%] p-2">
-                      <p className="text-white text-lg font-bold">
-                        {episode.name}
-                      </p>
-                      <p className="text-gray-300 text-base">
-                        {episode.overview}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

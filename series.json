@@ -12,6 +12,67 @@
                     {
                         "episodeID": "2",
                         "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    },
+                    {
+                        "episodeID": "3",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "4",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    },
+                    {
+                        "episodeID": "5",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "6",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    },
+                    {
+                        "episodeID": "7",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "8",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    }
+                ]
+            },
+            {
+                "seasonID": "2",
+                "episodes": [
+                    {
+                        "episodeID": "1",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "2",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    },
+                    {
+                        "episodeID": "3",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "4",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    },
+                    {
+                        "episodeID": "5",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "6",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
+                    },
+                    {
+                        "episodeID": "7",
+                        "episodeUrl": "https://hdbo.opstream5.com/share/9faf494a168e02772dfb2a2414b8309e"
+                    },
+                    {
+                        "episodeID": "8",
+                        "episodeUrl": "https://1080.opstream4.com/share/d30de3e60d3a361b91c0192cd05d53f4"
                     }
                 ]
             }

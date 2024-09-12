@@ -2,17 +2,17 @@ import React, { useEffect, useRef, useState } from "react";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { useRouter } from "next/router";
 import useMovie from "@/hooks/useMovie";
-const apikey: string = process.env.NEXT_PUBLIC_API_KEY ?? '';
+const apikey: string = process.env.NEXT_PUBLIC_API_KEY ?? "";
 const Watch = () => {
   const router = useRouter();
   const { movieId } = router.query;
   const { data } = useMovie(movieId as string);
-  const [movieName, setMovieName] = useState('');
-  
+  const [movieName, setMovieName] = useState("");
+
   useEffect(() => {
     fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${apikey}`)
-      .then(response => response.json())
-      .then(data => setMovieName(data.title));
+      .then((response) => response.json())
+      .then((data) => setMovieName(data.title));
   }, [movieId]);
 
   return (

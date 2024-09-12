@@ -11,6 +11,13 @@ const castEndpoint = (filmID: string): string =>
 const seriesEndpoint = (seriesID: string): string =>
     `https://api.themoviedb.org/3/tv/${seriesID}?api_key=${apikey}`;
 
+const seasonEndpoint = (seriesID: string, seasonNumber: number): string =>
+    `https://api.themoviedb.org/3/tv/${seriesID}/season/${seasonNumber}?api_key=${apikey}`;
+
+const episodeEndpoint = (seriesID: string, seasonNumber: number, episodeNumber: number): string =>
+    `https://api.themoviedb.org/3/tv/${seriesID}/season/${seasonNumber}/episode/${episodeNumber}?api_key=${apikey}`;
+
+
 
 const apiCall = async (endpoint: string): Promise<any> => {
     const options = {
@@ -37,4 +44,12 @@ export const fetchCast = (filmID: string): Promise<any> => {
 export const fetchSeries = (seriesID: string): Promise<any> => {
     let seriesUrl: string = seriesEndpoint(seriesID);
     return apiCall(seriesUrl);
+};
+export const fetchSeason = (seriesID: string, season: number): Promise<any> => {
+    let seasonUrl: string = seasonEndpoint(seriesID, season);
+    return apiCall(seasonUrl);
+};
+export const fetchEpisode = (seriesID: string, season: number, episode: number): Promise<any> => {
+    let episodeUrl: string = episodeEndpoint(seriesID, season, episode);
+    return apiCall(episodeUrl);
 };

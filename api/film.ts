@@ -7,6 +7,9 @@ const movieEndpoint = (filmID: string): string =>
 const castEndpoint = (filmID: string): string =>
     `https://api.themoviedb.org/3/movie/${filmID}/credits?api_key=${apikey}`;
 
+const castSeriesEndpoint = (seriesID: string): string =>
+    `https://api.themoviedb.org/3/tv/${seriesID}/credits?api_key=${apikey}`;
+
 
 const seriesEndpoint = (seriesID: string): string =>
     `https://api.themoviedb.org/3/tv/${seriesID}?api_key=${apikey}`;
@@ -38,8 +41,12 @@ export const fetchMovie = (filmID: string): Promise<any> => {
     return apiCall(movieUrl);
 };
 export const fetchCast = (filmID: string): Promise<any> => {
-    let movieUrl: string = castEndpoint(filmID);
-    return apiCall(movieUrl);
+    let castUrl: string = castEndpoint(filmID);
+    return apiCall(castUrl);
+};
+export const fetchSeriesCast = (serieSID: string): Promise<any> => {
+    let castSeriesUrl: string = castSeriesEndpoint(serieSID);
+    return apiCall(castSeriesUrl);
 };
 export const fetchSeries = (seriesID: string): Promise<any> => {
     let seriesUrl: string = seriesEndpoint(seriesID);

@@ -1,16 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useState } from "react";
-import { PlusIcon, XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, XMarkIcon, CheckIcon, PlayIcon } from "@heroicons/react/24/outline";
 import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";
-import { fetchCast, fetchSeason, fetchEpisode, fetchSeries } from "@/api/film";
+import {fetchSeason, fetchSeries,fetchSeriesCast } from "@/api/film";
 import { SeriesInfoModalProps } from "@/types";
 import axios from "axios";
-import Image from "next/image";
 import { useRouter } from "next/router";
-import { PlayIcon } from "@heroicons/react/24/solid";
-
-
-
 
 const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
   const [castData, setCast] = useState<any>(null);
@@ -20,7 +15,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
   const [isInWishlist, setIsInWishlist] = useState<boolean>(false);
   const [seasons, setSeasons] = useState<any[]>([]);
   const [episodes, setEpisodes] = useState<any[]>([]);
-  const [selectedSeason, setSelectedSeason] = useState<number | null>(1);
+  const [selectedSeason, setSelectedSeason] = useState<number>(1);
 
   useEffect(() => {
     setIsVisible(!!visible);
@@ -29,10 +24,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
   const handleFetchEpisodes = async (seasonNumber: number) => {
     if (seriesInfo?.id) {
       try {
-        const episodesData = await fetchSeason(
-          String(seriesInfo?.id),
-          seasonNumber
-        );
+        const episodesData = await fetchSeason(String(seriesInfo?.id), seasonNumber);
         setEpisodes(episodesData.episodes);
       } catch (error) {
         console.error("Error fetching episodes:", error);
@@ -42,7 +34,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
 
   useEffect(() => {
     if (seriesInfo?.id) {
-      fetchCast(String(seriesInfo?.id))
+      fetchSeriesCast(String(seriesInfo?.id))
         .then((data) => setCast(data))
         .catch((error) => console.error(error));
 
@@ -63,7 +55,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
         })
         .catch((error) => console.error(error));
     }
-  });
+  }, [seriesInfo]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -142,13 +134,12 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
     }
   };
 
-
-
   const handleSeasonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const seasonNumber = parseInt(event.target.value, 10);
     setSelectedSeason(seasonNumber);
     handleFetchEpisodes(seasonNumber);
   };
+
   const router = useRouter();
 
   if (!visible) {
@@ -192,7 +183,8 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                       watchingElement.scrollIntoView({ behavior: "smooth" });
                     }
                   }}
-                  className="bg-white rounded-3xl py-1 md:py-2 px-3 md:px-6 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-neutral-300 transition text-black">
+                  className="bg-white rounded-3xl py-1 md:py-2 px-3 md:px-6 w-auto text-xs lg:text-lg font-semibold flex flex-row items-center hover:bg-neutral-300 transition text-black"
+                >
                   <PlayIcon className="w-4 md:w-7 text-black mr-1" />
                   Watch Series
                 </button>
@@ -217,8 +209,8 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
               </div>
             )}
           </div>
-          <div className="px-6 md:px-12 py-4 md:py-8 flex flex-col w-full gap-5">
-            <div className="flex flex-row gap-8 justify-between w-full h-full">
+          <div className="pl-6 md:pl-12 py-4 md:py-8 flex flex-col w-full gap-5">
+            <div className="flex flex-row gap-8 justify-between w-full h-full pr-4 md:pr-6">
               <div className="flex flex-col w-[70%] h-full">
                 <div className="flex flex-row items-center gap-3">
                   <p className="text-lg text-green-400 ">
@@ -263,7 +255,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                 <select
                   className="bg-zinc-700 text-white p-2 rounded-lg"
                   onChange={handleSeasonChange}
-                  value={selectedSeason || ""}
+                  value={selectedSeason}
                 >
                   {seasons.map((season) => (
                     <option key={season.id} value={season.season_number}>
@@ -272,11 +264,11 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                   ))}
                 </select>
               </div>
-              <div  className="flex flex-col gap-4 w-full">
+              <div className="flex flex-col gap-4 w-full">
                 {episodes.map((episode, index) => (
                   <div
                     key={index}
-                    className="flex flex-row gap-4 w-full"
+                    className="flex flex-row gap-4 pr-2 w-full hover:bg-zinc-800 cursor-pointer"
                     onClick={() =>
                       router.push(
                         `/watch/series/${
@@ -295,7 +287,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                         className="object-cover rounded-sm"
                       />
                     </div>
-                    <div className="flex flex-col gap-1 w-[70%]">
+                    <div className="flex flex-col gap-1 w-[70%] p-2">
                       <p className="text-white text-lg font-bold">
                         {episode.name}
                       </p>

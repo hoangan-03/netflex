@@ -106,3 +106,14 @@ body {
 .hovering .filtered {
   filter: grayscale(100%) brightness(50%);
 }
+
+
+::-webkit-scrollbar {
+  width: 6px; 
+  height: 6px;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(39, 88, 99, 0.5) rgba(0, 0, 0, 0.1);
+}

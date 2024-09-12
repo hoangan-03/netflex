@@ -25,7 +25,7 @@ const SeriesViewModal = ({ visible, onClose }: ViewModalProps) => {
 
   return (
     <div className="z-[60000] transition duration-300 w-auto h-auto bg-black bg-opacity-80 flex justify-center items-start pt-[50px] overflow-x-hidden overflow-y-auto fixed inset-0 rounded-xl">
-      <div className="relative w-[1400px] h-[90vh] rounded-md overflow-hidden">
+      <div className="relative w-[1400px] h-[95vh] rounded-md overflow-hidden">
         <div
           className={`${
             isVisible ? "scale-100" : "scale-0"

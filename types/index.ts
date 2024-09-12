@@ -140,7 +140,7 @@ export interface MovieListProps {
   title: string;
 }
 export interface SeriesListProps {
-  data: MovieInterface[];
+  data: SeriesInterface[];
   title: string;
 }
 

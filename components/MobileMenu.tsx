@@ -22,6 +22,9 @@ const MobileMenu = ({ visible }: MobileMenuProps) => {
         <Link href="/random" className="px-3 text-start text-white hover:underline">
           Random selection
         </Link>
+        <Link href="/series" className="px-3 text-start text-white hover:underline">
+          Series
+        </Link>
       </div>
     </div>
   );

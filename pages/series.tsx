@@ -1,20 +1,18 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
-import DisplayRandom from "@/components/DisplayRandom";
-import MovieList from "@/components/MovieList";
 import SeriesList from "@/components/SeriesList";
 import SeriesInfoModal from "@/components/SeriesInfoModal";
-import ViewModal from "@/components/ViewModal";
+import SeriesViewModal from "@/components/SeriesViewModal";
 
 import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";
 import useSeriesList from "@/hooks/useSeriesList";
 import { fetchSeries } from "../api/film";
 import { useState, useEffect } from "react";
 import useViewStore from "@/hooks/useViewStore";
+import useViewSeriesStore from "@/hooks/useViewSeriesStore";
 
 const Series = () => {
   const { data: series = [] } = useSeriesList();
-  console.log("series, ", series);
   const [fetchedSeries, setFetchedSeries] = useState(series);
 
   useEffect(() => {
@@ -28,16 +26,15 @@ const Series = () => {
       })
       .catch((error) => console.error(error));
   }, [series]);
-  console.log("updatedSeries, ", fetchedSeries);
   const { isOpen, closeModal } = useSeriesInfoStore();
-  const { ViewModalopen, closeViewModal } = useViewStore();
+  const { ViewModalopen, closeViewModal } = useViewSeriesStore();
 
   return (
     <>
       <SeriesInfoModal visible={isOpen} onClose={closeModal} />
-      <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
+      <SeriesViewModal visible={ViewModalopen} onClose={closeViewModal} />
       <Navbar />
-      <div className="w-full h-auto flex flex-col gap-2 pb-16 overflow-hidden">
+      <div className="w-full h-auto flex flex-col gap-2 pt-[100px] pb-16 overflow-hidden">
       <SeriesList title="Suggestions for you" data={fetchedSeries} />
       </div>
     </>

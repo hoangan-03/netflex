@@ -3,6 +3,7 @@ import leftIcon from "../assets/icon/left.png";
 import rightIcon from "../assets/icon/right.png";
 import Image from "next/image";
 import useViewStore from "@/hooks/useViewStore";
+import useViewSeriesStore from "@/hooks/useViewSeriesStore";
 import { SeriesListProps, ScrollButtonProps } from "@/types";
 import SeriesCard from "@/components/SeriesCard";
 
@@ -23,9 +24,7 @@ const ScrollButton = ({ direction, scroll, icon }: ScrollButtonProps) => (
 
 const SeriesList = ({ data, title }: SeriesListProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
-  const { openModal } = useViewStore();
-
+  const { openModal } = useViewSeriesStore();
   const scroll = (scrollOffset: number) => {
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTo({
@@ -37,7 +36,7 @@ const SeriesList = ({ data, title }: SeriesListProps) => {
 
   return (
     <div className="px-4 md:px-12 mt-4 mb-8">
-      <div className="w-full relative h-[300px] md:h-[420px] overflow-hidden">
+      <div className="w-full relative h-[300px] md:h-[450px] overflow-hidden">
         <div className="w-full h-auto flex flex-row gap-4 justify-start items-center mb-8 ">
           <h1 className="pl-10 text-white text-base md:text-2xl lg:text-3xl font-semibold w-auto h-auto">
             {title}

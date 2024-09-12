@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import useViewStore from "@/hooks/useViewStore";
-import MovieCard from "./MovieCardResponsive";
+import useViewSeriesStore from "@/hooks/useViewSeriesStore";
+import SeriesCard from "./SeriesCard";
 import { ViewModalProps } from "@/types";
 
-const InfoModal = ({ visible, onClose }: ViewModalProps) => {
+const SeriesViewModal = ({ visible, onClose }: ViewModalProps) => {
   const [isVisible, setIsVisible] = useState<boolean>(visible ? true : false);
-  const { data, title } = useViewStore();
+  const { data, title } = useViewSeriesStore();
 
   useEffect(() => {
     setIsVisible(!!visible);
@@ -44,8 +44,8 @@ const InfoModal = ({ visible, onClose }: ViewModalProps) => {
               </div>
             </div>
             <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-auto h-auto px-3 lg:px-10 pb-[100px] overflow-y-auto max-h-[calc(100vh-250px)]">
-              {data?.map((movie) => (
-                <MovieCard key={movie.id} data={movie} />
+              {data?.map((series) => (
+                <SeriesCard key={series.id} data={series} />
               ))}
             </div>
           </div>
@@ -55,4 +55,4 @@ const InfoModal = ({ visible, onClose }: ViewModalProps) => {
   );
 };
 
-export default InfoModal;
+export default SeriesViewModal;

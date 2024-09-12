@@ -1,7 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useCallback, useEffect, useState } from "react";
 import { PlusIcon, XMarkIcon, CheckIcon } from "@heroicons/react/24/outline";
-import PlayButton from "@/components/PlayButton";
 import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";
 import { fetchCast, fetchSeason, fetchEpisode, fetchSeries } from "@/api/film";
 import { SeriesInfoModalProps } from "@/types";
@@ -9,6 +8,9 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import { PlayIcon } from "@heroicons/react/24/solid";
+
+
+
 
 const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
   const [castData, setCast] = useState<any>(null);
@@ -23,6 +25,20 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
   useEffect(() => {
     setIsVisible(!!visible);
   }, [visible]);
+
+  const handleFetchEpisodes = async (seasonNumber: number) => {
+    if (seriesInfo?.id) {
+      try {
+        const episodesData = await fetchSeason(
+          String(seriesInfo?.id),
+          seasonNumber
+        );
+        setEpisodes(episodesData.episodes);
+      } catch (error) {
+        console.error("Error fetching episodes:", error);
+      }
+    }
+  };
 
   useEffect(() => {
     if (seriesInfo?.id) {
@@ -42,13 +58,12 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
           return Promise.all(seasonPromises);
         })
         .then((seasonsData) => {
-          console.log("seasonsData", seasonsData);
           setSeasons(seasonsData);
           handleFetchEpisodes(1);
         })
         .catch((error) => console.error(error));
     }
-  }, [seriesInfo]);
+  });
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -127,19 +142,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
     }
   };
 
-  const handleFetchEpisodes = async (seasonNumber: number) => {
-    if (seriesInfo?.id) {
-      try {
-        const episodesData = await fetchSeason(
-          String(seriesInfo?.id),
-          seasonNumber
-        );
-        setEpisodes(episodesData.episodes);
-      } catch (error) {
-        console.error("Error fetching episodes:", error);
-      }
-    }
-  };
+
 
   const handleSeasonChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const seasonNumber = parseInt(event.target.value, 10);

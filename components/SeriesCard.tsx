@@ -24,7 +24,7 @@ const SeriesCard= ({ data }: SeriesCardProps) => {
           onClick={redirectToWatch}
           src={thumbnailUrl}
           alt="Movie"
-          className="cursor-pointer object-cover shadow-xl rounded-md  hover:rounded-b-none w-full h-[22vw] md:h-[12vw]"
+          className="cursor-pointer object-cover shadow-xl rounded-md hover:rounded-b-none w-full h-[22vw] md:h-[8vw]"
         />
         <div className="flex flex-row justify-between w-full px-4 py-2">
           <div

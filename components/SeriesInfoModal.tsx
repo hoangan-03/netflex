@@ -289,10 +289,9 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                       className="w-[300px] relative"
                       style={{ aspectRatio: "16/9" }}
                     >
-                      <Image
+                      <img
                         src={`https://image.tmdb.org/t/p/original${episode.still_path}`}
                         alt={episode.name}
-                        fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover rounded-sm"
                       />

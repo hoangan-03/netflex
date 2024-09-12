@@ -6,7 +6,7 @@ import { PlayIcon } from "@heroicons/react/24/solid";
 import useInfoModalStore from "../hooks/useInfoStore";
 import { MovieCardProps } from "../types";
 
-const MovieCard= ({ data }: MovieCardProps) => {
+const MovieCard = ({ data }: MovieCardProps) => {
   const router = useRouter();
   const { openModal } = useInfoModalStore();
 
@@ -55,24 +55,13 @@ const MovieCard= ({ data }: MovieCardProps) => {
         </p>
         <div className="flex flex-row px-4 pb-6 items-center gap-2 text-[12px] text-white lg:text-sm">
           <p>
-            {data.genres &&
-              data.genres.length > 0 &&
-              ((data.genres[0] as { name: string }).name === "Science Fiction"
-                ? "Sci-Fi"
-                : (data.genres[0] as { name: string }).name)}{" "}
-            •{" "}
-            {data.genres &&
-              data.genres.length > 1 &&
-              ((data.genres[1] as { name: string }).name === "Science Fiction"
-                ? "Sci-Fi"
-                : (data.genres[1] as { name: string }).name)}
-            {data.genres &&
-              data.genres.length > 2 &&
-              ` • ${
-                (data.genres[2] as { name: string }).name === "Science Fiction"
-                  ? "Sci-Fi"
-                  : (data.genres[2] as { name: string }).name
-              }`}
+            {data.genres && data.genres.length > 0
+              ? data.genres
+                  .map((genre: { name: string }) =>
+                    genre.name === "Science Fiction" ? "Sci-Fi" : genre.name
+                  )
+                  .join(" • ")
+              : ""}
           </p>
         </div>
       </div>

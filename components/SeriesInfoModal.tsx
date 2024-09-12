@@ -292,7 +292,6 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                       <img
                         src={`https://image.tmdb.org/t/p/original${episode.still_path}`}
                         alt={episode.name}
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover rounded-sm"
                       />
                     </div>

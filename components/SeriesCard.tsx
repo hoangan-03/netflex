@@ -6,7 +6,7 @@ import { PlayIcon } from "@heroicons/react/24/solid";
 import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";
 import { SeriesCardProps } from "../types";
 
-const SeriesCard= ({ data }: SeriesCardProps) => {
+const SeriesCard = ({ data }: SeriesCardProps) => {
   const router = useRouter();
   const { openModal } = useSeriesInfoStore();
 
@@ -48,12 +48,13 @@ const SeriesCard= ({ data }: SeriesCardProps) => {
           </div>
         </div>
         <p className="text-green-400 px-4 w-full font-semibold mt-1">
-          {data?.number_of_seasons} Seasons {"   "}
+          {data?.number_of_seasons}{" "}
+          {data?.number_of_seasons === 1 ? "Season" : "Seasons"} {"   "}
           <span className="text-gray-400">
-          {data?.number_of_episodes} Episodes
+            {data?.number_of_episodes} Episodes
           </span>
         </p>
-                <div className="flex flex-row px-4 pb-6 items-center gap-2 text-[12px] text-white lg:text-sm">
+        <div className="flex flex-row px-4 pb-6 items-center gap-2 text-[12px] text-white lg:text-sm">
           <p>
             {data.genres && data.genres.length > 0
               ? data.genres

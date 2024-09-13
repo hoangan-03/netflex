@@ -53,10 +53,11 @@ const MovieCardResponsive = ({ data }: MovieCardProps) => {
             {Math.floor(data?.runtime / 60)}h {data?.runtime % 60}m
           </span>
         </p>
-                <div className="flex flex-row px-4 pb-6 items-center gap-2 text-[12px] text-white lg:text-sm">
+        <div className="flex flex-row px-4 pb-6 items-center gap-2 text-[12px] text-white lg:text-sm">
           <p>
             {data.genres && data.genres.length > 0
               ? data.genres
+                  .slice(0, 3) // Take the first 3 genres if there are more than 4
                   .map((genre: { name: string }) =>
                     genre.name === "Science Fiction" ? "Sci-Fi" : genre.name
                   )

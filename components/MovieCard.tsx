@@ -57,6 +57,7 @@ const MovieCard = ({ data }: MovieCardProps) => {
           <p>
             {data.genres && data.genres.length > 0
               ? data.genres
+                  .slice(0, 3) // Take the first 3 genres if there are more than 4
                   .map((genre: { name: string }) =>
                     genre.name === "Science Fiction" ? "Sci-Fi" : genre.name
                   )

@@ -144,7 +144,7 @@ const Films = () => {
           </FormControl>
         </div>
       </div>
-      <div className={`w-full h-auto flex flex-col gap-2 ${selectedGenre === "Genre" ? "block" : "hidden"} `}>
+      <div className={`w-full h-auto bg-black flex flex-col gap-2 ${selectedGenre === "Genre" ? "block" : "hidden"} `}>
         <DisplayRandom data={updatedMovies} title={""} />
         <MovieList title="Top Picks for You" data={popularest} />
         <MovieList title="Anime Adventures" data={anime} />

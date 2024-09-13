@@ -77,18 +77,18 @@ const SearchPage = () => {
     <>
       <InfoModal visible={isOpen} onClose={closeModal} />
       <SeriesInfoModal visible={isSeriesOpen} onClose={closeSeriesModal} />
-      <div className="ml-16 my-8 py-1 h-auto">
-        <div className="flex items-center mb-12">
+      <div className="ml-4 lg:ml-16 my-8 py-1 h-auto bg-black">
+        <div className="flex items-center mb-12 w-full px-3">
           <button
             onClick={handleBackClick}
             className="flex items-center justify-center p-2 mr-4 rounded-full"
           >
             <ArrowLeftIcon className="w-5 h-5" />
           </button>
-          <h1 className="text-3xl font-bold">Search Results for <span className="text-red-600">{query}</span></h1>
+          <h1 className="text-xl lg:text-3xl font-bold">Search Results for <span className="text-red-600">{query}</span></h1>
         </div>
         {searchResults.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-full gap-4 px-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-full gap-20 sm:gap-4 px-10">
             {searchResults.map((result) => {
               if ((result as unknown as MovieInterface).title) {
                 return (

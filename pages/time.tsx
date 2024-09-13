@@ -52,7 +52,7 @@ const Time = () => {
       <InfoModal visible={isOpen} onClose={closeModal} />
       <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
       <Navbar />
-      <div className="w-full h-auto flex flex-col gap-2 pt-[100px]">
+      <div className="w-full h-auto bg-black flex flex-col gap-2 pt-[100px]">
         <MovieList title="Best of Bests" data={topFilms} />
         <MovieList title="Blockbusters" data={blockBusters} />
         <MovieList title="New on Netflex" data={_2024Releases} />

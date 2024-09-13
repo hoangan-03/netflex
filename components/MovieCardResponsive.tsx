@@ -24,16 +24,16 @@ const MovieCardResponsive = ({ data }: MovieCardProps) => {
           onClick={redirectToWatch}
           src={thumbnailUrl}
           alt="Movie"
-          className="cursor-pointer object-cover shadow-xl rounded-md  hover:rounded-b-none w-full h-[22vw] xl:h-[8vw]"
+          className="cursor-pointer object-cover shadow-xl rounded-md  hover:rounded-b-none w-full h-[170px] xl:h-[8vw]"
         />
-        <div className="flex flex-row justify-between w-full px-2 md:px-4 py-2">
+        <div className="flex flex-row justify-between w-full h-auto px-2 md:px-4 py-2">
           <div
             onClick={redirectToWatch}
             className="cursor-pointer min-w-6 max-h-6 md:min-w-8 md:max-h-8 xl:max-h-10 xl:w-10 xl:h-10 bg-white rounded-full flex justify-center items-center transition hover:bg-neutral-300"
           >
             <PlayIcon className="text-black w-4 xl:w-6" />
           </div>
-          <div className="w-auto h-[40px] max-w-[100px] flex justify-center items-start md:items-center ml-2 mr-1 md:mr-0 md:ml-4">
+          <div className="w-auto h-[40px] max-w-auto lg:max-w-[100px] flex justify-center items-start md:items-center ml-2 mr-1 md:mr-0 md:ml-4">
             <h1 className="text-white text-bold text-sm md:text-base w-auto">
               {data?.title?.length > 20
                 ? `${data.title.substring(0, 20)} ...`

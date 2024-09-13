@@ -140,7 +140,7 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
               </div>
             </div>
             {user && (
-              <div className="absolute bottom-[10%] right-10">
+              <div className="absolute bottom-[10%] right-3">
                 <button
                   onClick={
                     isInWishlist

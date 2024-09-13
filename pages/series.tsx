@@ -43,7 +43,7 @@ const Series = () => {
       <SeriesInfoModal visible={isOpen} onClose={closeModal} />
       <SeriesViewModal visible={ViewModalopen} onClose={closeViewModal} />
       <Navbar />
-      <div className="w-full h-auto flex flex-col gap-2 pt-[100px] pb-16 overflow-hidden">
+      <div className="w-full h-auto bg-black flex flex-col gap-2 pt-[100px] pb-16 overflow-hidden">
         <SeriesList title="Suggestions for you" data={fetchedSeries} />
         <SeriesList title="K-Dramas" data={kDrama} />
         <SeriesList title="Anime" data={anime} />

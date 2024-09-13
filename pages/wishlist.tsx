@@ -64,7 +64,7 @@ const WishList = () => {
             <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
             <SeriesViewModal visible={ViewSeriesModalopen} onClose={closeSeriesViewModal} />
             <Navbar />
-            <div className={`w-full h-auto pt-[100px] md:pt-[120px] md:px-[100px] flex flex-col px-4 sm:px-10 pb-[220px] gap-5 `}>
+            <div className={`w-full h-auto bg-black pt-[100px] md:pt-[120px] md:px-[100px] flex flex-col px-4 sm:px-10 pb-[220px] gap-5 `}>
                 <h2 className="text-white text-3xl font-bold px-10 ">Movies</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 w-auto overflow-hidden px-10 pb-24">
                     {movies?.map((movie: MovieInterface) => (

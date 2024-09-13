@@ -89,7 +89,7 @@ const Home = () => {
       <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
       <Navbar />
       
-      <div className="w-full h-auto flex flex-col gap-2 pb-16 overflow-hidden">
+      <div className="w-full h-auto bg-black flex flex-col gap-2 pb-16 overflow-hidden">
         <DisplayRandom data={updatedMovies} title={""} />
         <MovieList title="Suggestions for you" data={updatedMovies} />
         <MovieList title="Anime Adventures" data={anime} />

@@ -16,7 +16,7 @@ const SeriesCard = ({ data }: SeriesCardProps) => {
           onClick={() => openModal(data)}
           src={thumbnailUrl}
           alt="Movie"
-          className="cursor-pointer object-cover shadow-xl rounded-md hover:rounded-b-none w-full h-[22vw] xl:h-[8vw]"
+          className="cursor-pointer object-cover shadow-xl rounded-md hover:rounded-b-none w-full h-[170px] xl:h-[8vw]"
         />
         <div className="flex flex-row justify-between w-full px-4 py-2">
           <div className="w-auto h-[40px] max-w-[150px] flex justify-center items-center">

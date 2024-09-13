@@ -10,13 +10,13 @@ const SeriesCard = ({ data }: SeriesCardProps) => {
     "https://image.tmdb.org/t/p/original" + data.backdrop_path;
 
   return (
-    <div className="h-[60%] w-auto xl:w-[250px] min-w-[250px]">
-      <div className="flex-col h-full bg-zinc-900 w-full xl:w-[250px] transition-all duration-300 gap-2 justify-start rounded-md items-start hover:lg:scale-125 hover:lg:translate-y-12 z-[500] flex">
+    <div className="h-[32vh] sm:h-[42vh] md:h-[35vw] xl:h-[22vw] w-auto xl:w-[250px] min-w-auto xl:min-w-[250px]">
+      <div className="flex-col h-full pb-[30px] bg-zinc-900 w-full xl:w-[250px] transition-all duration-300 gap-2 justify-start rounded-md items-start hover:lg:scale-125 hover:lg:translate-y-12 z-[500] flex">
         <img
           onClick={() => openModal(data)}
           src={thumbnailUrl}
           alt="Movie"
-          className="cursor-pointer object-cover shadow-xl rounded-md hover:rounded-b-none w-full h-[120px]"
+          className="cursor-pointer object-cover shadow-xl rounded-md hover:rounded-b-none w-full h-[22vw] xl:h-[8vw]"
         />
         <div className="flex flex-row justify-between w-full px-4 py-2">
           <div className="w-auto h-[40px] max-w-[150px] flex justify-center items-center">

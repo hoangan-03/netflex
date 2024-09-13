@@ -9,7 +9,7 @@ import axios from 'axios';
 import { MovieInterface, SeriesInterface } from "../types";
 import { fetchMovie, fetchSeries } from "@/api/film";
 
-import SeriesCard from "@/components/SeriesCard";
+import SeriesCard from "@/components/SeriesCardResponsive";
 import SeriesInfoModal from "@/components/SeriesInfoModal";
 import useViewSeriesStore from "@/hooks/useViewSeriesStore";
 import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import useViewSeriesStore from "@/hooks/useViewSeriesStore";
-import SeriesCard from "./SeriesCard";
+import SeriesCard from "./SeriesCardResponsive";
 import { ViewModalProps } from "@/types";
 
 const SeriesViewModal = ({ visible, onClose }: ViewModalProps) => {

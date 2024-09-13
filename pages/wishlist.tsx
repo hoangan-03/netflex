@@ -2,20 +2,27 @@ import React, { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import InfoModal from "@/components/InfoModal";
 import ViewModal from "@/components/ViewModal";
-import useInfoModalStore from "@/hooks/useInfoStore";
+import useInfoStore from "@/hooks/useInfoStore";
 import useViewStore from "@/hooks/useViewStore";
 import MovieCardResponsive from "@/components/MovieCardResponsive";
 import axios from 'axios';
 import { MovieInterface, SeriesInterface } from "../types";
 import { fetchMovie, fetchSeries } from "@/api/film";
-import Series from "./series";
+
 import SeriesCard from "@/components/SeriesCard";
+import SeriesInfoModal from "@/components/SeriesInfoModal";
+import useViewSeriesStore from "@/hooks/useViewSeriesStore";
+import useSeriesInfoStore from "@/hooks/useSeriesInfoStore";
+import SeriesViewModal from "@/components/SeriesViewModal";
 
 const WishList = () => {
     const [movies, setMovies] = useState<MovieInterface[]>([]);
     const [series, setSeries] = useState<SeriesInterface[]>([]);
-    const { isOpen, closeModal } = useInfoModalStore();
+    const { isOpen, closeModal } = useInfoStore();
     const { ViewModalopen, closeViewModal } = useViewStore();
+    const { isOpen: isSeriesOpen, closeModal: closeSeriesModal } = useSeriesInfoStore();
+    const { ViewModalopen: ViewSeriesModalopen, closeViewModal: closeSeriesViewModal } = useViewSeriesStore();
+
 
     useEffect(() => {
         const fetchWishlist = async () => {
@@ -42,6 +49,7 @@ const WishList = () => {
                 const seriesDataPromises = series.map((series: any) => fetchSeries(series.seriesID));
                 const seriesData = await Promise.all(seriesDataPromises);
                 setSeries(seriesData);
+
             } catch (error) {
                 console.error("Error fetching wishlist:", error);
             }
@@ -52,7 +60,9 @@ const WishList = () => {
     return (
         <>
             <InfoModal visible={isOpen} onClose={closeModal} />
+            <SeriesInfoModal visible={isSeriesOpen} onClose={closeSeriesModal} />
             <ViewModal visible={ViewModalopen} onClose={closeViewModal} />
+            <SeriesViewModal visible={ViewSeriesModalopen} onClose={closeSeriesViewModal} />
             <Navbar />
             <div className={`w-full h-auto pt-[100px] md:pt-[120px] md:px-[100px] flex flex-col px-4 sm:px-10 pb-[220px] gap-5 `}>
                 <h2 className="text-white text-3xl font-bold px-10 ">Movies</h2>

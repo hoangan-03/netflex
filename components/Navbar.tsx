@@ -21,10 +21,23 @@ const Navbar = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState<{ fullname: string, userId: string } | null>(null);
+  const [user, setUser] = useState<{ fullname: string; userId: string } | null>(
+    null
+  );
   const [showDropdown, setShowDropdown] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // New loading state
   const searchFormRef = useRef<HTMLFormElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 1024); // lg breakpoint is 1024px
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,28 +61,29 @@ const Navbar = () => {
       const parsedUser = JSON.parse(user);
       const userId = parsedUser.userId;
       if (userId) {
-        axios.get(`/api/user?id=${userId}`)
-          .then(response => {
+        axios
+          .get(`/api/user?id=${userId}`)
+          .then((response) => {
             setIsLoggedIn(true);
             setUser(response.data);
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Error fetching user data:", error);
             setIsLoggedIn(false);
             setUser(null);
           })
           .finally(() => {
-            setIsLoading(false); 
+            setIsLoading(false);
           });
       } else {
         setIsLoggedIn(false);
         setUser(null);
-        setIsLoading(false); 
+        setIsLoading(false);
       }
     } else {
       setIsLoggedIn(false);
       setUser(null);
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   }, []);
 
@@ -125,19 +139,27 @@ const Navbar = () => {
     setUser(null);
     setShowDropdown(false);
   };
+  const handleLogoClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <nav className="w-full fixed z-[10001]">
       <div
         className={`px-4 md:px-16 py-3 flex flex-row items-center transition duration-500 ${
-          showBackground ? "bg-zinc-900 bg-opacity-90" : "bg-black/20 backdrop-blur-lg"
+          showBackground
+            ? "bg-zinc-900 bg-opacity-90"
+            : "bg-black/20 backdrop-blur-lg"
         }`}
       >
-        <Image
-          src={logo}
-          className="h-8 lg:h-12 w-20 object-cover"
-          alt="Logo"
-        />
+        <Link href="#" onClick={handleLogoClick}>
+          <Image
+            src={logo}
+            className="h-8 lg:h-12 w-20 object-cover"
+            alt="Logo"
+          />
+        </Link>
         <div className="flex-row ml-8 gap-7 hidden lg:flex">
           <Link href="/">
             <NavbarItem label="Home" active={router.pathname === "/"} />
@@ -146,10 +168,7 @@ const Navbar = () => {
             <NavbarItem label="Movies" active={router.pathname === "/films"} />
           </Link>
           <Link href="/series">
-            <NavbarItem
-              label="Series"
-              active={router.pathname === "/series"}
-            />
+            <NavbarItem label="Series" active={router.pathname === "/series"} />
           </Link>
           <Link href="/time">
             <NavbarItem
@@ -163,18 +182,12 @@ const Navbar = () => {
               active={router.pathname === "/random"}
             />
           </Link>
-          
         </div>
         <div
           onClick={toggleMobileMenu}
-          className="lg:hidden flex flex-row items-center gap-2 ml-8 cursor-pointer relative"
+          className="lg:hidden flex flex-row items-center gap-1 ml-auto cursor-pointer relative"
         >
-          <p className="text-white text-sm">Browse</p>
-          <ChevronDownIcon
-            className={`w-4 text-white fill-white transition ${
-              showMobileMenu ? "rotate-180" : "rotate-0"
-            }`}
-          />
+          <p className="text-white text-base font-bold">Menu</p>
           <MobileMenu visible={showMobileMenu} />
         </div>
         <div className="flex flex-row ml-auto gap-1 md:gap-4 items-center">
@@ -206,16 +219,18 @@ const Navbar = () => {
             <div className="text-white"></div>
           ) : isLoggedIn ? (
             <div className="relative flex flex-row gap-2 md:gap-6 items-center">
-              <Link href="/wishlist">
-                <NavbarItem
-                  label="Favourites"
-                  active={router.pathname === "/wishlist"}
-                />
-              </Link>
+              {!showSearch && (
+                <Link href="/wishlist">
+                  <NavbarItem
+                    label={isMobile ? "Favs" : "Favourites"}
+                    active={router.pathname === "/wishlist"}
+                  />
+                </Link>
+              )}
               <div className="cursor-pointer" onClick={handleAvatarClick}>
                 <Image
                   src={avatar}
-                  className="w-8 h-8 rounded-full"
+                  className="min-w-8 min-h-8 rounded-full"
                   alt="User Avatar"
                   width={32}
                   height={32}

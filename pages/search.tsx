@@ -8,6 +8,7 @@ import { SearchResult } from '@/types';
 import InfoModal from '@/components/InfoModal';
 import useInfoModalStore from '@/hooks/useInfoStore';
 import { ArrowLeftIcon } from '@heroicons/react/24/outline';
+import MovieCardResponsive from '@/components/MovieCardResponsive';
 
 const SearchPage = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const SearchPage = () => {
   return (
     <>
       <InfoModal visible={isOpen} onClose={closeModal} />
-      <div className="container mx-auto px-4 py-8">
+      <div className="ml-16 my-8 py-1 h-auto">
         <div className="flex items-center mb-4">
           <button
             onClick={handleBackClick}
@@ -48,9 +49,9 @@ const SearchPage = () => {
           <h1 className="text-2xl font-bold">Search Results for {query}</h1>
         </div>
         {searchResults.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 h-full gap-4">
             {searchResults.map((result) => (
-              <MovieCard key={result.id.toString()} data={result as unknown as MovieInterface} />
+              <MovieCardResponsive key={result.id.toString()} data={result as unknown as MovieInterface} />
             ))}
           </div>
         ) : (

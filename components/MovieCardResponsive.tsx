@@ -19,7 +19,7 @@ const MovieCardResponsive = ({ data }: MovieCardProps) => {
 
   return (
     <div className="h-[32vh] sm:h-[42vh] md:h-[35vw] xl:h-[22vw] w-auto xl:w-[250px]">
-      <div className="flex-col h-full pb-[30px] bg-zinc-900 w-full transition-all duration-300 gap-2 justify-start rounded-md items-start hover:scale-125 hover:translate-y-12 z-[500] flex">
+      <div className="flex-col h-full pb-[30px] bg-zinc-900 w-full transition-all duration-300 gap-2 justify-start rounded-md items-start hover:lg:scale-125 hover:lg:translate-y-12 z-[500] flex">
         <img
           onClick={redirectToWatch}
           src={thumbnailUrl}

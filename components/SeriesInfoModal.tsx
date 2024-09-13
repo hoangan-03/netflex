@@ -158,11 +158,11 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
 
   return (
     <div className="z-[65000] transition  w-auto duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
-      <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-y-scroll ">
+      <div className="relative w-auto mx-auto max-w-3xl rounded-md h-[80vh] overflow-y-scroll ">
         <div
           className={`${
             isVisible ? "scale-100" : "scale-0"
-          } transform duration-300  relative flex-auto max-h-[90vh] bg-zinc-900 drop-shadow-md`}
+          } transform duration-300  relative flex-auto bg-zinc-900 drop-shadow-md`}
         >
           <div className="relative h-48 md:h-96">
             <video
@@ -256,7 +256,10 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                 </div>
               </div>
             </div>
-            <div
+            
+          </div>
+        </div>
+        <div
               id="watching"
               className="pl-6 md:pl-12 pt-6 mt-4 w-full flex flex-col bg-black/70 backdrop-blur-2lg"
             >
@@ -322,9 +325,8 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                 })}
               </div>
             </div>
-          </div>
-        </div>
       </div>
+
     </div>
   );
 };

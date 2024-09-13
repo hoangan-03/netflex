@@ -40,6 +40,10 @@ const Time = () => {
   const blockBusters = updatedMovies.filter(
     (movie: MovieInterface) => movie.revenue >= 800000000
   );
+  const classicFilms = updatedMovies.filter(
+    (movie: MovieInterface) =>
+      movie.release_date && parseInt(movie.release_date.split("-")[0]) < 2000
+  );
   const {
     _2024Releases, _2023Releases, _2022Releases, _2021Releases, _2020Releases,_2019Releases, _2018Releases,
   } = releasesByYear;
@@ -58,7 +62,7 @@ const Time = () => {
         <MovieList title="2020 Release" data={_2020Releases} />
         <MovieList title="2019 Release" data={_2019Releases} />
         <MovieList title="2018 Release" data={_2018Releases} />
-        <MovieList title="Coming this week" data={_2024Releases} />
+        <MovieList title="Classics" data={classicFilms} />
       </div>
     </>
   );

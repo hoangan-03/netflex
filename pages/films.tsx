@@ -32,8 +32,10 @@ const Films = () => {
       })
       .catch((error) => console.error(error));
   }, [movies]);
+
   const { isOpen, closeModal } = useInfoModalStore();
   const { ViewModalopen, closeViewModal } = useViewStore();
+
   const anime = updatedMovies.filter(
     (movie: MovieInterface) =>
       movie.genres?.some((genre: Genre) => genre.name === "Animation") &&
@@ -48,6 +50,9 @@ const Films = () => {
   const horror = updatedMovies.filter((movie: MovieInterface) =>
     movie.genres?.some((genre: Genre) => genre.name === "Horror")
   );
+  const mystery = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Mystery")
+  );
   const HollywoodMovies = updatedMovies.filter(
     (movie: MovieInterface) =>
       movie.origin_country?.includes("US") &&
@@ -56,16 +61,43 @@ const Films = () => {
   const romance = updatedMovies.filter((movie: MovieInterface) =>
     movie.genres?.some((genre: Genre) => genre.name === "Romance")
   );
+  const epicAdventures = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Adventure")
+  );
+  const comedy = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Comedy")
+  );
+  const heartwarmingStories = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Drama")
+  );
+  const thrillers = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Thriller")
+  );
+  const documentaries = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Documentary")
+  );
+  const familyFun = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Family")
+  );
+  const classicHits = updatedMovies.filter((movie: MovieInterface) =>
+    movie.release_date && parseInt(movie.release_date.split("-")[0]) < 2000
+  );
+  const internationalCinema = updatedMovies.filter((movie: MovieInterface) =>
+    movie.origin_country && movie.origin_country.length > 1
+  );
+
   const handleChange = (event: SelectChangeEvent) => {
     setGenre(event.target.value as any);
   };
+
   const filterMovies = updatedMovies.filter((movie: MovieInterface) =>
     movie.genres?.some((genre: Genre) => genre.name === selectedGenre)
   );
+
   const popularest = updatedMovies.filter(
     (movie: MovieInterface) => movie.popularity > 140
   );
-  console.log("dasd",popularest);
+
   return (
     <>
       <InfoModal visible={isOpen} onClose={closeModal} />
@@ -91,7 +123,7 @@ const Films = () => {
               value={selectedGenre}
               label="Genre"
               onChange={handleChange}
-              style={{ color: "white", borderColor: "white", outline: "none",height: "2rem" }}
+              style={{ color: "white", borderColor: "white", outline: "none", height: "2rem" }}
               IconComponent={(props) => (
                 <ExpandMoreIcon {...props} style={{ color: "white" }} />
               )}
@@ -114,15 +146,24 @@ const Films = () => {
       </div>
       <div className={`w-full h-auto flex flex-col gap-2 ${selectedGenre === "Genre" ? "block" : "hidden"} `}>
         <DisplayRandom data={updatedMovies} title={""} />
-        <MovieList title="Suggestions for you" data={popularest} />
-        <MovieList title="Anime Movies" data={anime} />
-        <MovieList title="New Releases" data={newReleases} />
-        <MovieList title="Science-Fiction Movies" data={scienceFiction} />
-        <MovieList title="Horror Movies" data={horror} />
-        <MovieList title="Hollywood Movies" data={HollywoodMovies} />
-        <MovieList title="Romantic Movies" data={romance} />
+        <MovieList title="Top Picks for You" data={popularest} />
+        <MovieList title="Anime Adventures" data={anime} />
+        <MovieList title="Fresh Arrivals" data={newReleases} />
+        <MovieList title="Mind-Bending Sci-Fi" data={scienceFiction} />
+        <MovieList title="Spine-Chilling Horror" data={horror} />
+        <MovieList title="Unsolved Mysteries" data={mystery} />
+        <MovieList title="Hollywood Hits" data={HollywoodMovies} />
+        <MovieList title="Romantic Escapes" data={romance} />
+        <MovieList title="Epic Adventures" data={epicAdventures} />
+        <MovieList title="Laugh Out Loud" data={comedy} />
+        <MovieList title="Heartwarming Stories" data={heartwarmingStories} />
+        <MovieList title="Edge of Your Seat Thrillers" data={thrillers} />
+        <MovieList title="Documentary Spotlight" data={documentaries} />
+        <MovieList title="Family Fun" data={familyFun} />
+        <MovieList title="Classic Hits" data={classicHits} />
+        <MovieList title="International Cinema" data={internationalCinema} />
       </div>
-          <div className={`w-full h-auto pt-[150px] md:pt-[220px] px-4 md:px-6 xl:px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
+      <div className={`w-full h-auto pt-[150px] md:pt-[220px] px-4 md:px-6 xl:px-[100px] flex flex-col gap-2 ${selectedGenre !== "Genre" ? "block" : "hidden"} `}>
         <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6 w-auto overflow-hidden px-4 sm:px-10 pb-[220px]">
           {filterMovies?.map((movie: MovieInterface) => (
             <MovieCardResponsive key={movie.id} data={movie} />

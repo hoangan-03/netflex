@@ -40,22 +40,48 @@ const Home = () => {
   const newReleases = updatedMovies.filter((movie: MovieInterface) =>
     movie.release_date?.includes("2024")
   );
-  const scienceFiction = updatedMovies.filter(
-    (movie: MovieInterface) =>
-      movie.genres?.some((genre: Genre) => genre.name === "Science Fiction") 
+  const scienceFiction = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Science Fiction")
   );
-  const horror = updatedMovies.filter(
-    (movie: MovieInterface) =>
-      movie.genres?.some((genre: Genre) => genre.name === "Horror") 
+  const horror = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Horror")
+  );
+  const mystery = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Mystery")
   );
   const HollywoodMovies = updatedMovies.filter(
     (movie: MovieInterface) =>
-      movie.origin_country?.includes("US") && movie.genres?.some((genre: Genre) => genre.name !== "Animation")
+      movie.origin_country?.includes("US") &&
+      movie.genres?.some((genre: Genre) => genre.name !== "Animation")
   );
-  const romance = updatedMovies.filter(
-    (movie: MovieInterface) =>
-      movie.genres?.some((genre: Genre) => genre.name === "Romance") 
+  const romance = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Romance")
   );
+  const epicAdventures = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Adventure")
+  );
+  const comedy = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Comedy")
+  );
+  const heartwarmingStories = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Drama")
+  );
+  const thrillers = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Thriller")
+  );
+  const documentaries = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Documentary")
+  );
+  const familyFun = updatedMovies.filter((movie: MovieInterface) =>
+    movie.genres?.some((genre: Genre) => genre.name === "Family")
+  );
+  const classicHits = updatedMovies.filter((movie: MovieInterface) =>
+    movie.release_date && parseInt(movie.release_date.split("-")[0]) < 2000
+  );
+  const internationalCinema = updatedMovies.filter((movie: MovieInterface) =>
+    movie.origin_country && movie.origin_country.length > 1
+  );
+
 
   return (
     <>
@@ -66,12 +92,21 @@ const Home = () => {
       <div className="w-full h-auto flex flex-col gap-2 pb-16 overflow-hidden">
         <DisplayRandom data={updatedMovies} title={""} />
         <MovieList title="Suggestions for you" data={updatedMovies} />
-        <MovieList title="Anime" data={anime} />
-        <MovieList title="New Releases" data={newReleases} />
-        <MovieList title="Science-Fiction" data={scienceFiction} />
-        <MovieList title="Horror" data={horror} />
-        <MovieList title="Hollywood Movies" data={HollywoodMovies} />
-        <MovieList title="Romantic Drama" data={romance} />
+        <MovieList title="Anime Adventures" data={anime} />
+        <MovieList title="Fresh Arrivals" data={newReleases} />
+        <MovieList title="Mind-Bending Sci-Fi" data={scienceFiction} />
+        <MovieList title="Spine-Chilling Horror" data={horror} />
+        <MovieList title="Unsolved Mysteries" data={mystery} />
+        <MovieList title="Hollywood Hits" data={HollywoodMovies} />
+        <MovieList title="Romantic Escapes" data={romance} />
+        <MovieList title="Epic Adventures" data={epicAdventures} />
+        <MovieList title="Laugh Out Loud" data={comedy} />
+        <MovieList title="Heartwarming Stories" data={heartwarmingStories} />
+        <MovieList title="Edge of Your Seat Thrillers" data={thrillers} />
+        <MovieList title="Documentary Spotlight" data={documentaries} />
+        <MovieList title="Family Fun" data={familyFun} />
+        <MovieList title="Classic Hits" data={classicHits} />
+        <MovieList title="International Cinema" data={internationalCinema} />
       </div>
     </>
   );

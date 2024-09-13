@@ -75,8 +75,8 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
           .get(`/api/getwishlist?userId=${parsedUser.userId}`)
           .then((response) => {
             const wishlist = response.data;
-            const isInWishlist = wishlist.some(
-              (movie: any) => movie.videoID === String(seriesInfo?.id)
+            const isInWishlist = wishlist.series.some(
+              (s: any) => s.seriesID === String(seriesInfo?.id)
             );
             setIsInWishlist(isInWishlist);
           })
@@ -96,33 +96,32 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
     }, 300);
   }, [onClose]);
 
-  const handleAddToWishlist = async () => {
+   const handleAddToWishlist = async () => {
     if (user) {
       const userId = user.userId;
-      const movieId = seriesInfo?.id;
-      if (!userId || !movieId) {
-        alert("User ID or Movie ID is missing");
+      const seriesId = seriesInfo?.id;
+      if (!userId || !seriesId) {
+        alert("User ID or Series ID is missing");
         return;
       }
       try {
         await axios.post("/api/addwishlist", {
           userId,
-          movieId,
+          seriesId,
         });
         setIsInWishlist(true);
       } catch (error) {
-        console.error("Error adding movie to wishlist:", error);
+        console.error("Error adding series to wishlist:", error);
       }
     } else {
       alert("User not found");
     }
   };
-
   const handleRemoveFromWishlist = async () => {
     if (user) {
       const userId = user.userId;
-      const movieId = seriesInfo?.id;
-      if (!userId || !movieId) {
+      const seriesId = seriesInfo?.id;
+      if (!userId || !seriesId) {
         alert("User ID or Movie ID is missing");
         return;
       }
@@ -130,7 +129,7 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
         await axios.delete("/api/removefromwishlist", {
           params: {
             userId,
-            movieId,
+            seriesId,
           },
         });
         setIsInWishlist(false);
@@ -217,8 +216,8 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
               </div>
             )}
           </div>
-          <div className="pl-6 md:pl-12 py-4 md:py-8 flex flex-col w-full gap-5">
-            <div className="flex flex-row gap-8 justify-between w-full h-full pr-4 md:pr-6">
+          <div className=" py-4 md:py-8 flex flex-col w-full gap-5">
+            <div className="flex flex-row gap-8 justify-between w-full h-full px-6 md:px-12 pb-12">
               <div className="flex flex-col w-[70%] h-full">
                 <div className="flex flex-row items-center gap-3">
                   <p className="text-lg text-green-400 ">
@@ -257,7 +256,10 @@ const SeriesInfoModal = ({ visible, onClose }: SeriesInfoModalProps) => {
                 </div>
               </div>
             </div>
-            <div id="watching" className="mt-4 w-full flex flex-col">
+            <div
+              id="watching"
+              className="pl-6 md:pl-12 pt-6 mt-4 w-full flex flex-col bg-black/70 backdrop-blur-2lg"
+            >
               <div className="mb-10 flex flex-row gap-3 justify-start items-center">
                 <h3 className="text-white text-lg font-bold">Seasons:</h3>
                 <select

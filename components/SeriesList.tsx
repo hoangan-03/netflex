@@ -38,7 +38,7 @@ const SeriesList = ({ data, title }: SeriesListProps) => {
     <div className="px-4 md:px-12 mt-4 mb-8">
       <div className="w-full relative h-[300px] md:h-[480px] overflow-hidden">
         <div className="w-full h-auto flex flex-row gap-4 justify-start items-center mb-8 ">
-          <h1 className="pl-10 text-white text-base md:text-2xl lg:text-3xl font-semibold w-auto h-auto">
+          <h1 className="pl-16 text-white text-base md:text-2xl lg:text-3xl font-semibold w-auto h-auto">
             {title}
           </h1>
           <button className="text-grandblue flex flex-row gap-1 w-auto text-sm h-auto text-start justify-center items-end ">
@@ -57,7 +57,7 @@ const SeriesList = ({ data, title }: SeriesListProps) => {
         />
         <div
           ref={scrollContainerRef}
-          className="pl-10 flex flex-row h-full gap-6 w-[auto] overflow-auto "
+          className="px-16 flex flex-row h-full gap-6 w-[auto] overflow-auto "
         >
           {data.map((series) => (
             <SeriesCard key={series.id} data={series} />

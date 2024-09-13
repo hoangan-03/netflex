@@ -14,16 +14,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const userObjectId = new ObjectId(String(userId));
       const userObjectIdStr = userObjectId.toString();
 
-      const wishlist = await prismadb.userMovie.findMany({
+      const movieWishlist = await prismadb.userMovie.findMany({
         where: { userId: userObjectIdStr },
         include: {
           movie: true,
         },
       });
 
-      const movies = wishlist.map((userMovie) => userMovie.movie);
+      const seriesWishlist = await prismadb.userSeries.findMany({
+        where: { userId: userObjectIdStr },
+        include: {
+          series: true,
+        },
+      });
 
-      res.status(200).json(movies);
+      const movies = movieWishlist.map((userMovie) => userMovie.movie);
+      const series = seriesWishlist.map((userSeries) => userSeries.series);
+      const wishlist = {
+        movies,
+        series,
+      };
+
+      res.status(200).json(wishlist);
     } catch (error) {
       console.error('Error retrieving wishlist:', error);
       res.status(500).json({ error: 'Internal server error' });

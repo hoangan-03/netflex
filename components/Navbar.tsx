@@ -145,6 +145,12 @@ const Navbar = () => {
           <Link href="/films">
             <NavbarItem label="Movies" active={router.pathname === "/films"} />
           </Link>
+          <Link href="/series">
+            <NavbarItem
+              label="Series"
+              active={router.pathname === "/series"}
+            />
+          </Link>
           <Link href="/time">
             <NavbarItem
               label="Time by Time"
@@ -157,12 +163,7 @@ const Navbar = () => {
               active={router.pathname === "/random"}
             />
           </Link>
-          <Link href="/series">
-            <NavbarItem
-              label="Series"
-              active={router.pathname === "/series"}
-            />
-          </Link>
+          
         </div>
         <div
           onClick={toggleMobileMenu}
@@ -176,7 +177,7 @@ const Navbar = () => {
           />
           <MobileMenu visible={showMobileMenu} />
         </div>
-        <div className="flex flex-row ml-auto gap-4 items-center">
+        <div className="flex flex-row ml-auto gap-1 md:gap-4 items-center">
           <div
             className="text-gray-200 hover:text-gray-300 cursor-pointer transition duration-500"
             onClick={toggleSearch}
@@ -198,16 +199,16 @@ const Navbar = () => {
               placeholder="Search for title"
             />
           </form>
-          <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition mr-3">
+          {/* <div className="text-gray-200 hover:text-gray-300 cursor-pointer transition mr-3">
             <BellIcon className="w-6" />
-          </div>
+          </div> */}
           {isLoading ? (
             <div className="text-white"></div>
           ) : isLoggedIn ? (
-            <div className="relative flex flex-row gap-6 items-center">
+            <div className="relative flex flex-row gap-2 md:gap-6 items-center">
               <Link href="/wishlist">
                 <NavbarItem
-                  label="Wishlist"
+                  label="Favourites"
                   active={router.pathname === "/wishlist"}
                 />
               </Link>

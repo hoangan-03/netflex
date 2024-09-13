@@ -4,7 +4,7 @@ import PlayButton from "@/components/PlayButton";
 import useInfoModalStore from "@/hooks/useInfoStore";
 import { fetchCast } from "@/api/film";
 import { InfoModalProps } from "@/types";
-import axios from 'axios';
+import axios from "axios";
 
 const InfoModal = ({ visible, onClose }: InfoModalProps) => {
   const [castData, setCast] = useState<any>(null);
@@ -31,13 +31,16 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
       try {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
-        axios.get(`/api/getwishlist?userId=${parsedUser.userId}`)
-          .then(response => {
+        axios
+          .get(`/api/getwishlist?userId=${parsedUser.userId}`)
+          .then((response) => {
             const wishlist = response.data;
-            const isInWishlist = wishlist.some((movie: any) => movie.videoID === String(signleInfo?.id));
+            const isInWishlist = wishlist.movies.some(
+              (movie: any) => movie.videoID === String(signleInfo?.id)
+            );
             setIsInWishlist(isInWishlist);
           })
-          .catch(error => {
+          .catch((error) => {
             console.error("Error fetching wishlist:", error);
           });
       } catch (error) {
@@ -58,20 +61,20 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
       const userId = user.userId;
       const movieId = signleInfo?.id;
       if (!userId || !movieId) {
-        alert('User ID or Movie ID is missing');
+        alert("User ID or Movie ID is missing");
         return;
       }
       try {
-        await axios.post('/api/addwishlist', {
+        await axios.post("/api/addwishlist", {
           userId,
           movieId,
         });
         setIsInWishlist(true);
       } catch (error) {
-        console.error('Error adding movie to wishlist:', error);
+        console.error("Error adding movie to wishlist:", error);
       }
     } else {
-      alert('User not found');
+      alert("User not found");
     }
   };
   const handleRemoveFromWishlist = async () => {
@@ -79,11 +82,11 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
       const userId = user.userId;
       const movieId = signleInfo?.id;
       if (!userId || !movieId) {
-        alert('User ID or Movie ID is missing');
+        alert("User ID or Movie ID is missing");
         return;
       }
       try {
-        await axios.delete('/api/removefromwishlist', {
+        await axios.delete("/api/removefromwishlist", {
           params: {
             userId,
             movieId,
@@ -91,10 +94,10 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
         });
         setIsInWishlist(false);
       } catch (error) {
-        console.error('Error removing movie from wishlist:', error);
+        console.error("Error removing movie from wishlist:", error);
       }
     } else {
-      alert('User not found');
+      alert("User not found");
     }
   };
 
@@ -109,8 +112,9 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
     <div className="z-[65000] transition  w-auto duration-300 bg-black bg-opacity-80 flex justify-center items-center overflow-x-hidden overflow-y-auto fixed inset-0">
       <div className="relative w-auto mx-auto max-w-3xl rounded-md overflow-hidden ">
         <div
-          className={`${isVisible ? "scale-100" : "scale-0"
-            } transform duration-300  relative flex-auto max-h-[90vh] bg-zinc-900 drop-shadow-md`}
+          className={`${
+            isVisible ? "scale-100" : "scale-0"
+          } transform duration-300  relative flex-auto max-h-[90vh] bg-zinc-900 drop-shadow-md`}
         >
           <div className="relative h-48 md:h-96">
             <video
@@ -138,7 +142,11 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
             {user && (
               <div className="absolute bottom-[10%] right-10">
                 <button
-                  onClick={isInWishlist ? handleRemoveFromWishlist : handleAddToWishlist}
+                  onClick={
+                    isInWishlist
+                      ? handleRemoveFromWishlist
+                      : handleAddToWishlist
+                  }
                   className="flex flex-row gap-4 justify-center bg-white/10 rounded-full hover:bg-white/30 p-2 backdrop-blur-sm items-center"
                 >
                   {isInWishlist ? (
@@ -159,12 +167,14 @@ const InfoModal = ({ visible, onClose }: InfoModalProps) => {
                   </p>
                   <p className="text-gray-300 text-lg">
                     {signleInfo?.runtime &&
-                      `${Math.floor(signleInfo.runtime / 60)}h ${signleInfo.runtime % 60
+                      `${Math.floor(signleInfo.runtime / 60)}h ${
+                        signleInfo.runtime % 60
                       }m`}
                   </p>
                 </div>
                 <p className="text-white text-lg w-auto mb-7">
-                  {signleInfo?.vote_average.toFixed(1)}{"/10"}
+                  {signleInfo?.vote_average.toFixed(1)}
+                  {"/10"}
                 </p>
                 <p className="text-white text-base">{signleInfo?.overview}</p>
               </div>

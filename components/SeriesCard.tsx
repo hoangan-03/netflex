@@ -19,7 +19,7 @@ const SeriesCard = ({ data }: SeriesCardProps) => {
           className="cursor-pointer object-cover shadow-xl rounded-md hover:rounded-b-none w-full h-[120px]"
         />
         <div className="flex flex-row justify-between w-full px-4 py-2">
-          <div className="w-auto h-[40px] max-w-[150px] flex justify-center items-center">
+          <div className="w-auto h-[40px] max-w-auto flex justify-center items-center">
             <h1 className="text-white text-bold text-base">
               {data?.name?.length > 20
                 ? `${data.name.substring(0, 20)} ...`

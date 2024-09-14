@@ -134,8 +134,7 @@ const Auth = () => {
         onClose={handleCloseModal}
         errorMes={modalMessage}
       />
-      <div className="w-[70%] h-full bg-black rounded-3xl">
-        <div className="absolute flex flex-row gap-2 items-center right-5 top-5">
+      <div className="absolute flex flex-row gap-2 items-center right-5 top-5">
           <h2 className="text-base font-normal text-black w-[80%] text-center">
             {isLoginView
               ? "Don't have an account?"
@@ -148,13 +147,15 @@ const Auth = () => {
             {isLoginView ? "Register" : "Login"}
           </button>
         </div>
+      <div className="w-[70%] h-full bg-black rounded-3xl hidden md:block ">
+        
         <img
-          className="w-full h-full object-cover rounded-3xl"
+          className="w-full h-full object-cover rounded-3xl "
           src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=2659&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
           alt="Background"
         />
       </div>
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-12 flex flex-col items-center justify-center relative">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 md:p-10 lg:p-12 flex flex-col items-center justify-center relative">
         <h2 className="text-2xl text-black font-bold mb-2">
           {isLoginView ? "Sign in to " : "Sign up to"}
           <span className="text-rose-700"> Netflex</span>

@@ -32,11 +32,15 @@ const Series = () => {
   const kDrama = fetchedSeries.filter((series: SeriesInterface) =>
     series.origin_country?.includes("KR") && series.genres?.some((genre: Genre) => genre.name === "Drama") 
   );
+  const usSeries = fetchedSeries.filter((series: SeriesInterface) =>
+    series.origin_country?.includes("US") 
+  );
   const anime = fetchedSeries.filter(
     (series: SeriesInterface) =>
       series.genres?.some((genre: Genre) => genre.name === "Animation") &&
       series.original_language === "ja"
   );
+  
 
   return (
     <>
@@ -47,6 +51,7 @@ const Series = () => {
         <SeriesList title="Suggestions for you" data={fetchedSeries} />
         <SeriesList title="K-Dramas" data={kDrama} />
         <SeriesList title="Anime" data={anime} />
+        <SeriesList title="US Series" data={usSeries} />
       </div>
     </>
   );
